@@ -28,5 +28,6 @@ public class Program {
 		} else {
 			System.out.println(" Multiplication not possible");
 		}
+		System.out.println("End");
 	}
 }
