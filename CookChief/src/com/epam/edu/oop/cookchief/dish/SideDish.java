@@ -13,32 +13,33 @@ import com.epam.edu.oop.cookchief.util.CookingWay;
 import com.epam.edu.oop.cookchief.util.IngredientCreator;
 import com.epam.edu.oop.cookchief.util.RegularFild;
 
-public class SideDish {
+public class SideDish implements Cloneable {
 
-	private List<Ingredient> sideDish = new ArrayList<Ingredient>();
+	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
 	public SideDish(Map<String, Integer> ingredietMap) {
 
 		IngredientCreator ingredientCreator = new IngredientCreator();
 
 		for (String key : ingredietMap.keySet()) {
-			sideDish.add(ingredientCreator.create(key, ingredietMap.get(key)));
+			ingredientList.add(ingredientCreator.create(key, ingredietMap.get(key)));
 		}
 	}
 
 	public void cooking() {
 		for (CookingWay cooked : RegularFild.Cooked()) {
-			for (Ingredient ingredient : sideDish) {
+			for (Ingredient ingredient : ingredientList) {
 				if (cooked.ingredientName
 						.equals(ingredient.getIngredientName())) {
 					((Vegetable) ingredient).cook(cooked.cookingWay);
+					ingredient.setCookingWay(cooked.cookingWay);
 				}
 			}
 		}
 	}
 
 	public void sortByName() {
-		Collections.sort(sideDish, new Comparator<Ingredient>() {
+		Collections.sort(ingredientList, new Comparator<Ingredient>() {
 
 			@Override
 			public int compare(Ingredient o1, Ingredient o2) {
@@ -48,7 +49,7 @@ public class SideDish {
 	}
 
 	public void sortByCalories() {
-		Collections.sort(sideDish, new Comparator<Ingredient>() {
+		Collections.sort(ingredientList, new Comparator<Ingredient>() {
 
 			@Override
 			public int compare(Ingredient o1, Ingredient o2) {
@@ -75,7 +76,7 @@ public class SideDish {
 	public List<Ingredient> getRange(int minCalories, int maxCalories) {
 
 		List<Ingredient> range = new ArrayList<Ingredient>();
-		for (Ingredient ingredient : sideDish) {
+		for (Ingredient ingredient : ingredientList) {
 			if (ingredient instanceof Vegetable) {
 				if ((((Vegetable) ingredient).getCalories() >= minCalories)
 						& (((Vegetable) ingredient).getCalories() <= maxCalories)) {
@@ -85,14 +86,24 @@ public class SideDish {
 		}
 
 		return range;
-	} 
+	}
+
+	public SideDish clone() throws CloneNotSupportedException {
+		SideDish cloneSideDish = (SideDish) (super.clone());
+		List<Ingredient> ingredientListClone = new ArrayList<Ingredient>();
+		for (Ingredient ingredient : ingredientList) {
+			ingredientListClone.add(ingredient.clone());
+		}
+		cloneSideDish.ingredientList=ingredientListClone;
+		return cloneSideDish;
+	}
 
 	public String getDescription() {
-		String desString = "";
-		for (Ingredient ingredient : sideDish) {
-			desString += ingredient.getDescription() + "\n";
+		String descriptionString = "";
+		for (Ingredient ingredient : ingredientList) {
+			descriptionString += ingredient.getDescription() + "\n";
 		}
-		return desString;
+		return descriptionString;
 
 	}
 

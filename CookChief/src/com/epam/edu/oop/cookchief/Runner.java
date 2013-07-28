@@ -5,10 +5,11 @@ import com.epam.edu.oop.cookchief.util.PropertyReader;
 import com.epam.edu.oop.cookchief.util.RegularFild;
 
 public class Runner {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException {
 		PropertyReader propertyReader = new PropertyReader();
 		propertyReader.loadProperty(RegularFild.SIDEDISH1);
 		SideDish sideDish = new SideDish(propertyReader.getProperties());
+		SideDish copySideDish = sideDish.clone();
 		// processing
 		sideDish.cooking();
 		// sideDish.sortByName();
