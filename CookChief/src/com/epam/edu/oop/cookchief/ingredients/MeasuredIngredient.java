@@ -1,10 +1,9 @@
 package com.epam.edu.oop.cookchief.ingredients;
 
-import com.epam.edu.oop.cookchief.Constant;
-import com.epam.edu.oop.cookchief.IProcessed;
+import com.epam.edu.oop.cookchief.util.RegularFild;
 
 public abstract class MeasuredIngredient extends Ingredient implements
-		IProcessed {
+		Processed {
 
 	private int calories;
 
@@ -24,6 +23,11 @@ public abstract class MeasuredIngredient extends Ingredient implements
 	@Override
 	public String getDescription() {
 		return this.getIngredientName() + " " + this.getCalories() + " "
-				+ Constant.MEASUR;
+				+ RegularFild.MEASUR;
+	}
+	
+	@Override
+	public String toString(){
+		return getDescription();
 	}
 }

@@ -1,6 +1,6 @@
 package com.epam.edu.oop.cookchief.ingredients;
 
-import com.epam.edu.oop.cookchief.CookEnum;
+import com.epam.edu.oop.cookchief.util.CookEnum;
 
 public class Vegetable extends MeasuredIngredient {
 
