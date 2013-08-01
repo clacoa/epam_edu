@@ -7,7 +7,6 @@ public class Ingredient implements Cloneable {
 	private String ingredientName;
 	private CookEnum cookingWay;
 
-	
 	public Ingredient(String ingredientName) {
 		this.ingredientName = ingredientName;
 		this.cookingWay = CookEnum.FRESH;
@@ -32,16 +31,16 @@ public class Ingredient implements Cloneable {
 	public void setCookingWay(CookEnum cookingWay) {
 		this.cookingWay = cookingWay;
 	}
-	
-	public Ingredient clone(){
-		Ingredient ingredient=null;
+
+	public Ingredient clone() {
+		Ingredient ingredient = null;
 		try {
-			ingredient = (Ingredient)(super.clone());
+			ingredient = (Ingredient) (super.clone());
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		return ingredient;
-		
+
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.epam.edu.oop.cookchief.dish;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +11,22 @@ import com.epam.edu.oop.cookchief.ingredients.Vegetable;
 import com.epam.edu.oop.cookchief.util.CookingWay;
 import com.epam.edu.oop.cookchief.util.IngredientCreator;
 import com.epam.edu.oop.cookchief.util.RegularFild;
+import com.epam.edu.oop.cookchief.util.SortedByCalories;
+import com.epam.edu.oop.cookchief.util.SortedByName;
 
-public class SideDish implements Cloneable {
+public class SideDish implements Cloneable, Comparable<SideDish> {
 
 	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+	private String sideDishName;
 
-	public SideDish(Map<String, Integer> ingredietMap) {
+	public SideDish(String sideDishName, Map<String, Integer> ingredietMap) {
 
+		this.sideDishName = sideDishName;
 		IngredientCreator ingredientCreator = new IngredientCreator();
 
 		for (String key : ingredietMap.keySet()) {
-			ingredientList.add(ingredientCreator.create(key, ingredietMap.get(key)));
+			ingredientList.add(ingredientCreator.create(key,
+					ingredietMap.get(key)));
 		}
 	}
 
@@ -39,38 +43,22 @@ public class SideDish implements Cloneable {
 	}
 
 	public void sortByName() {
-		Collections.sort(ingredientList, new Comparator<Ingredient>() {
-
-			@Override
-			public int compare(Ingredient o1, Ingredient o2) {
-				return o1.getIngredientName().compareTo(o2.getIngredientName());
-			}
-		});
+		Collections.sort(ingredientList, new SortedByName());
 	}
 
 	public void sortByCalories() {
-		Collections.sort(ingredientList, new Comparator<Ingredient>() {
+		Collections.sort(ingredientList, new SortedByCalories());
+	}
 
-			@Override
-			public int compare(Ingredient o1, Ingredient o2) {
-				if (!(o1 instanceof MeasuredIngredient)) {
-					return -1;
-				}
-				if (!(o2 instanceof MeasuredIngredient)) {
-					return 1;
-				}
-
-				if (((MeasuredIngredient) o1).getCalories() > ((MeasuredIngredient) o2)
-						.getCalories()) {
-					return 1;
-				} else if (((MeasuredIngredient) o1).getCalories() < ((MeasuredIngredient) o2)
-						.getCalories()) {
-					return -1;
-				} else {
-					return 0;
-				}
+	public int getCaloricContent() {
+		int caloriContent = 0;
+		for (Ingredient ingredient : ingredientList) {
+			if ((ingredient instanceof MeasuredIngredient)) {
+				caloriContent = caloriContent
+						+ ((MeasuredIngredient) ingredient).getCalories();
 			}
-		});
+		}
+		return caloriContent;
 	}
 
 	public List<Ingredient> getRange(int minCalories, int maxCalories) {
@@ -90,16 +78,17 @@ public class SideDish implements Cloneable {
 
 	public SideDish clone() throws CloneNotSupportedException {
 		SideDish cloneSideDish = (SideDish) (super.clone());
+		cloneSideDish.sideDishName = this.getSideDishName() + " копия";
 		List<Ingredient> ingredientListClone = new ArrayList<Ingredient>();
 		for (Ingredient ingredient : ingredientList) {
 			ingredientListClone.add(ingredient.clone());
 		}
-		cloneSideDish.ingredientList=ingredientListClone;
+		cloneSideDish.ingredientList = ingredientListClone;
 		return cloneSideDish;
 	}
 
 	public String getDescription() {
-		String descriptionString = "";
+		String descriptionString = this.sideDishName + "\n";
 		for (Ingredient ingredient : ingredientList) {
 			descriptionString += ingredient.getDescription() + "\n";
 		}
@@ -112,4 +101,34 @@ public class SideDish implements Cloneable {
 		return getDescription();
 
 	}
+
+	@Override
+	public int compareTo(SideDish enterySideDish) {
+		int caloricContent1 = this.getCaloricContent();
+		int caloricContent2 = enterySideDish.getCaloricContent();
+		if (caloricContent1 > caloricContent2) {
+			return 1;
+		} else if (caloricContent1 < caloricContent2) {
+			return -1;
+		}
+		return 0;
+	}
+
+	public boolean equals(SideDish enterySideDish) {
+		int caloricContent1 = this.getCaloricContent();
+		int caloricContent2 = enterySideDish.getCaloricContent();
+		if (caloricContent1 == caloricContent2) {
+			return true;
+		}
+		return false;
+	}
+
+	public String getSideDishName() {
+		return sideDishName;
+	}
+
+	public void setSideDishName(String sideDishName) {
+		this.sideDishName = sideDishName;
+	}
+
 }
