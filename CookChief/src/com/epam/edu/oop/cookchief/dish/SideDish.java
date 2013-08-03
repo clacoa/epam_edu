@@ -1,5 +1,6 @@
 package com.epam.edu.oop.cookchief.dish;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +15,15 @@ import com.epam.edu.oop.cookchief.util.RegularFild;
 import com.epam.edu.oop.cookchief.util.SortedByCalories;
 import com.epam.edu.oop.cookchief.util.SortedByName;
 
-public class SideDish implements Cloneable, Comparable<SideDish> {
+public class SideDish implements Cloneable, Comparable<SideDish>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6095545432708811919L;
+	/**
+	 * 
+	 */
 	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 	private String sideDishName;
 

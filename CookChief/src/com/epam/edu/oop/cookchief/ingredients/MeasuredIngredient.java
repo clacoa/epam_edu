@@ -5,6 +5,10 @@ import com.epam.edu.oop.cookchief.util.RegularFild;
 public abstract class MeasuredIngredient extends Ingredient implements
 		Processed {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5890108828448946688L;
 	private int calories;
 
 	public MeasuredIngredient(String ingredientName, int calories) {

@@ -1,9 +1,15 @@
 package com.epam.edu.oop.cookchief.ingredients;
 
+import java.io.Serializable;
+
 import com.epam.edu.oop.cookchief.util.CookEnum;
 
-public class Ingredient implements Cloneable {
+public class Ingredient implements Cloneable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7519963280102309703L;
 	private String ingredientName;
 	private CookEnum cookingWay;
 

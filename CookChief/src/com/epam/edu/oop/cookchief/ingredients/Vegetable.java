@@ -4,6 +4,11 @@ import com.epam.edu.oop.cookchief.util.CookEnum;
 
 public class Vegetable extends MeasuredIngredient {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -556617257950963739L;
+
 	public Vegetable(String ingredientName, int calories) {
 		super(ingredientName, calories);
 	}
