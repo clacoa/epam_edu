@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.concurrent.Semaphore;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -35,9 +36,10 @@ public class Property {
 
 	}
 
-	public static List<Train> getData(String dataFileName) {
+	public static List<Train> getData(String dataFileName, final Semaphore semaphore) {
 
-		final List<Train> trains=new ArrayList<Train>();		
+		final List<Train> trains=new ArrayList<Train>();
+		
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
@@ -64,13 +66,13 @@ public class Property {
 						isDirection = true;
 					}
 				}
-			 
+				@Override
 				public void endElement(String uri, String localName,
 					String qName) throws SAXException {					
 					if (qName.equalsIgnoreCase("p:train")) {
 						Train train = new Train(name, time,
 								direction == 0 ? Direction.TO_MINES
-										: Direction.TO_DEPO);
+										: Direction.TO_DEPO, semaphore);
 						trains.add(train);
 					}
 			 
