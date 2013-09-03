@@ -10,7 +10,7 @@ import com.epam.edu.chuggington.util.Property;
 public class Runner {
 	private static Logger LOG = Logger.getLogger(Runner.class);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		LOG.info("Start Chuggington");
 
@@ -20,6 +20,9 @@ public class Runner {
 
 		for (Train train : trains) {
 			train.start();
+		}
+		for (Train train : trains) {
+			train.join();
 		}
 		LOG.info("End Chuggington");
 	}

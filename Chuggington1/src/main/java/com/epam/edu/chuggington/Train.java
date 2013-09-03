@@ -12,8 +12,7 @@ public class Train extends Thread {
 	private Tunnel<Railway> tunnel;
 	private Railway railway;
 	private static Logger LOG = Logger.getLogger(Train.class);
-	
-	
+
 	public Train(String name, int throwTunnelTime, Direction direction,
 			Tunnel<Railway> tunnel) {
 		super();
@@ -49,8 +48,19 @@ public class Train extends Thread {
 
 	@Override
 	public void run() {
-		for (int i = 0; i < 10; i++) {
-			tunnel.goToTunnel(this);
+		for (int i = 0; i < 100; i++) {
+			try {
+				tunnel.getSemaphoreVee().acquire();
+				Railway railway = tunnel.getRailway();
+				railway.holdRailway(this.getTrainName());
+				LOG.info(this.toString());
+				Thread.sleep(this.getThrowTunnelTime());
+				railway.clearRailway(this.getTrainName());
+				tunnel.add(railway);
+				tunnel.getSemaphoreVee().release();
+			} catch (InterruptedException e) {
+				LOG.error(e.getMessage(), e);
+			}
 		}
 	}
 
