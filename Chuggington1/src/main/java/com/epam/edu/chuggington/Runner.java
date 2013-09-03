@@ -1,5 +1,6 @@
 package com.epam.edu.chuggington;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -11,6 +12,8 @@ public class Runner {
 	private static Logger LOG = Logger.getLogger(Runner.class);
 
 	public static void main(String[] args) throws InterruptedException {
+		
+		Date dateStart = new Date(System.currentTimeMillis());
 
 		LOG.info("Start Chuggington");
 
@@ -25,5 +28,7 @@ public class Runner {
 			train.join();
 		}
 		LOG.info("End Chuggington");
+		Date dateEnd = new Date(System.currentTimeMillis());
+		LOG.info(dateEnd.getTime()-dateStart.getTime());
 	}
 }
