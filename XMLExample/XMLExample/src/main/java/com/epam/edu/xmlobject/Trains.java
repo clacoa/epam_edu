@@ -10,6 +10,7 @@ package com.epam.edu.xmlobject;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +43,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "trains")
 public class Trains {
 
-    protected List<Object> train;
+    protected List<Object> trainList;
+    
+    public Trains() {
+		trainList = new ArrayList<Object>();
+	}
 
     /**
      * Gets the value of the train property.
@@ -67,10 +72,14 @@ public class Trains {
      * 
      */
     public List<Object> getTrain() {
-        if (train == null) {
-            train = new ArrayList<Object>();
+        if (trainList == null) {
+            trainList = new ArrayList<Object>();
         }
-        return this.train;
+        return this.trainList;
+    }
+    
+    public void addTrain(Train train){
+    	this.trainList.add(train);
     }
 
 }

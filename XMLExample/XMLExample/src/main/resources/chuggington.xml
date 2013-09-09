@@ -5,19 +5,19 @@
 	<ch:train>
 		<ch:trainID>1</ch:trainID>
 		<ch:name>Wilson</ch:name>
-		<ch:throTunnelTime>3</ch:throTunnelTime>
+		<ch:throwTunnelTime>3</ch:throwTunnelTime>
 		<ch:direction>0</ch:direction>
 	</ch:train>
 	<ch:train>
 		<ch:trainID>2</ch:trainID>
 		<ch:name>Koko</ch:name>
-		<ch:throTunnelTime>5</ch:throTunnelTime>
+		<ch:throwTunnelTime>5</ch:throwTunnelTime>
 		<ch:direction>0</ch:direction>
 	</ch:train>
 	<ch:train>
 		<ch:trainID>3</ch:trainID>
 		<ch:name>Brewster</ch:name>
-		<ch:throTunnelTime>6</ch:throTunnelTime>
+		<ch:throwTunnelTime>6</ch:throwTunnelTime>
 		<ch:direction>1</ch:direction>
 	</ch:train>
 </ch:trains>
