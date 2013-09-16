@@ -19,6 +19,7 @@ public class TrainHandler  extends DefaultHandler {
 	String direction;
 	int time;
 	Trains trains;
+	Train train;
 	
 	public TrainHandler(Trains trains){
 		this.trains=trains;
@@ -28,8 +29,9 @@ public class TrainHandler  extends DefaultHandler {
 	public void startElement(String uri, String localName,
 			String qName, Attributes attributes)
 			throws SAXException {
-		if (qName.equalsIgnoreCase("ch:trainID")) {
-			isTrainID = true;
+		if (qName.equalsIgnoreCase("ch:train")) {
+			 train = new Train();
+		     train.setId(attributes.getValue("id"));
 		}
 		if (qName.equalsIgnoreCase("ch:name")) {
 			isName = true;
@@ -47,9 +49,7 @@ public class TrainHandler  extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName,
 			String qName) throws SAXException {
-		if (qName.equalsIgnoreCase("ch:train")) {
-			Train train = new Train();
-			train.setTrainID(trainID);
+		if (qName.equalsIgnoreCase("ch:train")) {			
 			train.setName(name);
 			train.setThrowTunnelTime(BigInteger.valueOf(time));
 			train.setDirection(direction);

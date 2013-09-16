@@ -17,12 +17,12 @@ import org.xml.sax.SAXException;
 import com.epam.edu.xmlobject.Train;
 import com.epam.edu.xmlobject.Trains;
 
-public class ParserDOM {
+public class ParserDOM implements ChuggingtonParser{
 
 	private static Logger LOG = Logger.getLogger(ParserDOM.class);
 	private static  Trains trains = new Trains();
 
-	public static Trains getData(String dataFileName) {
+	public Trains getData(String dataFileName) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -39,6 +39,10 @@ public class ParserDOM {
 
 					if (node instanceof Element) {
 						Train train = new Train();
+						if (node.getNodeName() != null
+								&& node.getNodeName().equals("ch:train")) {
+							train.setId(((Element) node).getAttribute("id"));
+						}
 						NodeList childNodes = node.getChildNodes();
 						for (int j = 0; j < childNodes.getLength(); j++) {
 							Node cNode = childNodes.item(j);
@@ -46,9 +50,6 @@ public class ParserDOM {
 								String content = cNode.getLastChild().
 								getTextContent().trim();
 								switch (cNode.getNodeName()) {
-								case "ch:trainID":
-									train.setTrainID(content);
-									break;
 								case "ch:name":
 									train.setName(content);
 									break;

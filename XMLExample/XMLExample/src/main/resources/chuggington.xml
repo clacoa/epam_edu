@@ -2,20 +2,17 @@
 <ch:trains xmlns:ch="Chuggington"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="Chuggington trains.xsd ">
-	<ch:train>
-		<ch:trainID>1</ch:trainID>
+	<ch:train id="t1">
 		<ch:name>Wilson</ch:name>
 		<ch:throwTunnelTime>3</ch:throwTunnelTime>
 		<ch:direction>0</ch:direction>
 	</ch:train>
-	<ch:train>
-		<ch:trainID>2</ch:trainID>
+	<ch:train id="t2">
 		<ch:name>Koko</ch:name>
 		<ch:throwTunnelTime>5</ch:throwTunnelTime>
 		<ch:direction>0</ch:direction>
 	</ch:train>
-	<ch:train>
-		<ch:trainID>3</ch:trainID>
+	<ch:train id="t3">
 		<ch:name>Brewster</ch:name>
 		<ch:throwTunnelTime>6</ch:throwTunnelTime>
 		<ch:direction>1</ch:direction>

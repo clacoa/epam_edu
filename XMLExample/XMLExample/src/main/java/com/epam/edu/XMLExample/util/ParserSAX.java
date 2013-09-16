@@ -15,7 +15,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.epam.edu.xmlobject.Train;
 import com.epam.edu.xmlobject.Trains;
 
-public class ParserSAX {
+public class ParserSAX implements ChuggingtonParser{
 
 	private static Logger LOG = Logger.getLogger(ParserSAX.class);
 	private static XMLReader xmlReader;
@@ -24,7 +24,7 @@ public class ParserSAX {
 	private SAXParserFactory spfactory;
 	private static SAXParser saxParser;
 
-	public static Trains getData(String dataFileName) {
+	public Trains getData(String dataFileName) {
 
 		xmlReader = null;
 		saxHandler = new TrainHandler(trains);
@@ -33,12 +33,11 @@ public class ParserSAX {
 			SAXParserFactory spfactory = SAXParserFactory.newInstance();
 			SAXParser saxParser = spfactory.newSAXParser();
 			xmlReader = saxParser.getXMLReader();
-			saxParser.parse(dataFileName, saxHandler);
+			saxParser.parse(ClassLoader
+						.getSystemResourceAsStream(dataFileName), saxHandler);
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 		}
-
 		return trains;
 	}
-
 }
