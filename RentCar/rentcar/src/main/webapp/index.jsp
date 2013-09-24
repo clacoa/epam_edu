@@ -41,15 +41,20 @@
 	<%--<%UserDao ud= new UserDao();
 	User user=ud.get(Long.valueOf(1));
 	s=user.toString();--%>
-
+	
+	<%UserDao ud= new UserDao(); %>
 	<% s="";
-	UserDao ud= new UserDao();
+	User newUser = new User(Long.valueOf(0),"sidorov@mail.ru","qwerty5","sidorov", "Ivan", "Sidorov", "NP546321789");
+	ud.saveOrUpdate(newUser);
+	%>
+	<%ud.delete(Long.valueOf(6)); %>
+	<%= s%>
+	<% s="";
 	List<User> userList = ud.getAll();
 	for (User user1: userList){
 		s+= user1.toString()+"<hr/><br/>";
 	}
 	%>
 	<%= s%>
-	
 </body>
 </html>

@@ -3,16 +3,21 @@ package com.epam.edu.rentcar.db.entity;
 public class User extends AbstractEntity {
 
 	public final static String GET_BY_ID = "Select * from users where id=%s";
-	public final static String GET_ALL="Select * from users";
+	public final static String GET_ALL = "Select * from users";
+	public final static String UPDATE = "Update users Set email='%s', userpassword='%s', nickname='%s', firstname='%s', lastname='%s', passportnumber='%s' where id=%s";
+	public final static String INSERT = "insert into users (email, userpassword, nickname, firstname, lastname, passportnumber) values ('%s', '%s','%s','%s','%s','%s')";
+	public final static String DELETE_BY_ID = "Delete from users where id=%s";
+	public final static String GET_BY_EMAIL = "Select * from users where email='%s'";
+	public final static String GET_BY_PASSPORT="Select * from users where passportnumber='%s'";
 	
 	public final static String ID = "id";
 	public final static String EMAIL = "email";
-	public final static String USER_PASSWORD = "userpassword";
+	public final static String PASSWORD = "userpassword";
 	public final static String NICKNAME = "nickname";
 	public final static String FIRSTNAME = "firstname";
 	public final static String LASTNAME = "lastname";
 	public final static String PASSPORT = "passportnumber";
-	
+
 	private String email;
 	private String password;
 	private String nickName;
@@ -22,12 +27,13 @@ public class User extends AbstractEntity {
 
 	public User(Long id, String email, String password, String nickName,
 			String firstName, String lastName, String passport) {
-		this.email=email;
-		this.password=password;
-		this.nickName=nickName;
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.passport=passport;
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.nickName = nickName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passport = passport;
 	}
 
 	public String getEmail() {

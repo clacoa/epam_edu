@@ -1,7 +1,7 @@
 package com.epam.edu.rentcar.db.entity;
 
 public abstract class AbstractEntity {
-	private Long id;
+	protected Long id;
 	
 	public AbstractEntity(){
 	}
