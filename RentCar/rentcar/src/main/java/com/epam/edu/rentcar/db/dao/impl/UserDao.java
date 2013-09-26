@@ -11,15 +11,19 @@ import com.epam.edu.rentcar.db.ConnectionPool;
 import com.epam.edu.rentcar.db.dao.GenericDao;
 import com.epam.edu.rentcar.db.entity.User;
 
-public class UserDao implements GenericDao<User> {
+public class UserDao extends EntityDao<User> {
 
-	public User get(Long id) {
+	@Override
+	public String getTableName() {
+		return User.TABLE_NAME;
+	}
+
+	public User get(Connection conn, Long id) {
 		User user = null;
-		Connection conn = null;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(String.format(User.GET_BY_ID, id));
+			ResultSet rs = st.executeQuery(String.format(User.GET_BY_ID,
+					User.TABLE_NAME, id));
 			if (rs.next()) {
 				user = new User(id, rs.getString(User.EMAIL),
 						rs.getString(User.PASSWORD),
@@ -30,30 +34,21 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
+		} catch (Exception ignore) {
 		}
 		return user;
 	}
-	
-	public List<User> getAll() {
+
+	public List<User> getAll(Connection conn) {
 		List<User> userList = null;
 		User user = null;
-		Connection conn = null;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(User.GET_ALL);
+			ResultSet rs = st.executeQuery(String.format(User.GET_ALL, User.TABLE_NAME));
 			userList = new ArrayList<User>();
 			while (rs.next()) {
 				user = new User(Long.valueOf(rs.getString(User.ID)),
-						rs.getString(User.EMAIL),
-						rs.getString(User.PASSWORD),
+						rs.getString(User.EMAIL), rs.getString(User.PASSWORD),
 						rs.getString(User.NICKNAME),
 						rs.getString(User.FIRSTNAME),
 						rs.getString(User.LASTNAME),
@@ -62,25 +57,17 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
 		}
 		return userList;
 	}
 
-	public void saveOrUpdate(User entity) {
-		Connection conn = null;
+	public void saveOrUpdate(Connection conn, User entity) {
 		int updateResult;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(String.format(User.GET_BY_ID,
-					entity.getId()));
+					User.TABLE_NAME, entity.getId()));
 			if (rs.next()) {
 				updateResult = st.executeUpdate(String.format(User.UPDATE,
 						entity.getEmail(), entity.getPassword(),
@@ -96,60 +83,26 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
+		} catch (Exception ignore) {
 		}
-
 	}
 
-	public void saveOrUpdateAll(Collection<User> entities) {
+	public void saveOrUpdateAll(Connection conn, Collection<User> entities) {
 		for (User entity : entities) {
-			saveOrUpdate(entity);
-		}
-
-	}
-
-	public void delete(Long id) {
-		Connection conn = null;
-		int executeResult;
-		try {
-			conn = ConnectionPool.getInstance().getConnection();
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(String.format(User.GET_BY_ID, id));
-			if (rs.next()) {
-				executeResult = st.executeUpdate(String.format(
-						User.DELETE_BY_ID, id));
-			}
-			rs.close();
-			st.close();
-			conn.close();
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
+			saveOrUpdate(conn, entity);
 		}
 	}
 
-	public List<User> findByNamedQuery(String queryName) {
+	public List<User> findByNamedQuery(Connection conn, String queryName) {
 		List<User> userList = null;
 		User user = null;
-		Connection conn = null;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(queryName);
 			userList = new ArrayList<User>();
 			while (rs.next()) {
 				user = new User(Long.valueOf(rs.getString(User.ID)),
-						rs.getString(User.EMAIL),
-						rs.getString(User.PASSWORD),
+						rs.getString(User.EMAIL), rs.getString(User.PASSWORD),
 						rs.getString(User.NICKNAME),
 						rs.getString(User.FIRSTNAME),
 						rs.getString(User.LASTNAME),
@@ -158,57 +111,21 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
+		} catch (Exception ignore) {
+
 		}
 		return userList;
 	}
 
-	public List<User> findByNamedQueryAndNamedParam(String queryName,
-			String paramName, Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean isExists(Long id) {
-		boolean isExists = false;
-		Connection conn = null;
-		try {
-			conn = ConnectionPool.getInstance().getConnection();
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(String.format(User.GET_BY_ID, id));
-			if (rs.next()) {
-				isExists = true;
-			}
-			rs.close();
-			st.close();
-			conn.close();
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
-		}
-		return isExists;
-	}
-
-	public User getByEmail(String email) {
+	public User getByEmail(Connection conn, String email) {
 		User user = null;
-		Connection conn = null;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(String.format(User.GET_BY_EMAIL,
 					email));
 			if (rs.next()) {
-				user = new User(Long.valueOf(rs.getString(User.EMAIL)), email,
-						rs.getString(User.PASSWORD),
+				user = new User(Long.valueOf(rs.getString(User.ID)),
+						rs.getString(User.EMAIL), rs.getString(User.PASSWORD),
 						rs.getString(User.NICKNAME),
 						rs.getString(User.FIRSTNAME),
 						rs.getString(User.LASTNAME),
@@ -216,22 +133,14 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
 		}
 		return user;
 	}
 
-	public boolean isExistsEmail(String email) {
+	public boolean isExistsEmail(Connection conn, String email) {
 		boolean isExists = false;
-		Connection conn = null;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(String.format(User.GET_BY_EMAIL,
 					email));
@@ -240,28 +149,20 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
+		} catch (Exception ignore) {
 		}
 		return isExists;
 	}
-	
-	public User getByPassportNumber(String passportNumber) {
+
+	public User getByPassportNumber(Connection conn, String passportNumber) {
 		User user = null;
-		Connection conn = null;
 		try {
-			conn = ConnectionPool.getInstance().getConnection();
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(String.format(User.GET_BY_PASSPORT,
 					passportNumber));
 			if (rs.next()) {
-				user = new User(Long.valueOf(rs.getString(User.ID)), rs.getString(User.EMAIL),
-						rs.getString(User.PASSWORD),
+				user = new User(Long.valueOf(rs.getString(User.ID)),
+						rs.getString(User.EMAIL), rs.getString(User.PASSWORD),
 						rs.getString(User.NICKNAME),
 						rs.getString(User.FIRSTNAME),
 						rs.getString(User.LASTNAME),
@@ -269,14 +170,24 @@ public class UserDao implements GenericDao<User> {
 			}
 			rs.close();
 			st.close();
-			conn.close();
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (Exception ignore) {
-				}
 		}
 		return user;
 	}
+	public boolean isExistsPassportNumber(Connection conn, String email) {
+		boolean isExists = false;
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(String.format(User.GET_BY_PASSPORT,
+					email));
+			if (rs.next()) {
+				isExists = true;
+			}
+			rs.close();
+			st.close();
+		} catch (Exception ignore) {
+		}
+		return isExists;
+	}
+
 }

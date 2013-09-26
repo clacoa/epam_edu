@@ -1,24 +1,29 @@
 package com.epam.edu.rentcar.db.dao;
 
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
 
-public interface GenericDao<T> {
+import com.epam.edu.rentcar.db.entity.AbstractEntity;
 
-	public T get(Long id);
+public interface GenericDao<T extends AbstractEntity> {
 
-	public List<T> getAll();
+	public T get(Connection conn, Long id);
 
-	public void saveOrUpdate(T entity);
+	public List<T> getAll(Connection conn);
 
-	public void saveOrUpdateAll(Collection<T> entities);
+	public void saveOrUpdate(Connection conn, T entity);
 
-	public void delete(Long id);
+	public void saveOrUpdateAll(Connection conn, Collection<T> entities);
 
-	public boolean isExists(Long id);
+	public void delete(Connection conn, Long id);
 
-	public List<T> findByNamedQuery(String queryName);
+	public boolean isExists(Connection conn, Long id);
 	
-	public List<T> findByNamedQueryAndNamedParam(String queryName, String paramName, Object value);
+	public String getTableName();
+
+	public List<T> findByNamedQuery(Connection conn, String queryName);
+	
+	//public List<T> findByNamedQueryAndNamedParam(Connection conn, String queryName, String paramName, Object value);
 
 }

@@ -1,8 +1,8 @@
 package com.epam.edu.rentcar.db.entity;
 
-public abstract class AbstractState extends AbstractEntity{
+public abstract class AbstractStatus extends AbstractEntity{
 	
-	public AbstractState(Long id) {
+	public AbstractStatus(Long id) {
 		super(id);
 	}
 

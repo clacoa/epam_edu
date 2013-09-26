@@ -2,14 +2,12 @@ package com.epam.edu.rentcar.db.entity;
 
 public class User extends AbstractEntity {
 
-	public final static String GET_BY_ID = "Select * from users where id=%s";
-	public final static String GET_ALL = "Select * from users";
 	public final static String UPDATE = "Update users Set email='%s', userpassword='%s', nickname='%s', firstname='%s', lastname='%s', passportnumber='%s' where id=%s";
-	public final static String INSERT = "insert into users (email, userpassword, nickname, firstname, lastname, passportnumber) values ('%s', '%s','%s','%s','%s','%s')";
-	public final static String DELETE_BY_ID = "Delete from users where id=%s";
+	public final static String INSERT = "Insert into users (email, userpassword, nickname, firstname, lastname, passportnumber) values ('%s', '%s','%s','%s','%s','%s')";
 	public final static String GET_BY_EMAIL = "Select * from users where email='%s'";
 	public final static String GET_BY_PASSPORT="Select * from users where passportnumber='%s'";
 	
+	public final static String TABLE_NAME="users";
 	public final static String ID = "id";
 	public final static String EMAIL = "email";
 	public final static String PASSWORD = "userpassword";
