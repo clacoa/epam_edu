@@ -1,10 +1,7 @@
-package com.epam.edu.rentcar.db.entity;
+package com.epam.edu.rentcar.entity;
 
 public abstract class AbstractEntity {
 	
-	public final static String GET_BY_ID = "Select * from %s where id=%s";
-	public final static String DELETE_BY_ID = "Delete from %s where id=%s";
-	public final static String GET_ALL = "Select * from %s";
 	
 	protected Long id;
 

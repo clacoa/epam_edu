@@ -1,12 +1,12 @@
-package com.epam.edu.rentcar.db.dao;
+package com.epam.edu.rentcar.dao;
 
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
 
-import com.epam.edu.rentcar.db.entity.AbstractEntity;
+import com.epam.edu.rentcar.entity.AbstractEntity;
 
-public interface GenericDao<T extends AbstractEntity> {
+public interface GenericRentCarDao<T extends AbstractEntity> {
 
 	public T get(Connection conn, Long id);
 
@@ -20,9 +20,9 @@ public interface GenericDao<T extends AbstractEntity> {
 
 	public boolean isExists(Connection conn, Long id);
 	
-	public String getTableName();
-
 	public List<T> findByNamedQuery(Connection conn, String queryName);
+	
+	public String getTableName();
 	
 	//public List<T> findByNamedQueryAndNamedParam(Connection conn, String queryName, String paramName, Object value);
 

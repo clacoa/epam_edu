@@ -21,7 +21,7 @@ public class ConnectionPool {
 //		p.setValidationInterval(30000);
 //		p.setTimeBetweenEvictionRunsMillis(30000);
 //		p.setMaxActive(100);
-//		p.setInitialSize(10);
+		p.setInitialSize(10);
 //		p.setMaxWait(10000);
 //		p.setMinEvictableIdleTimeMillis(30000);
 		datasource = new DataSource();
