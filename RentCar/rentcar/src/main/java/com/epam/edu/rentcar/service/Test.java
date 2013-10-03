@@ -1,5 +1,6 @@
 package com.epam.edu.rentcar.service;
 
+import java.security.AllPermission;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.epam.edu.rentcar.dao.impl.UserDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreCarStatusDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreOrderDao;
@@ -18,6 +20,7 @@ import com.epam.edu.rentcar.entity.Car;
 import com.epam.edu.rentcar.entity.Order;
 import com.epam.edu.rentcar.entity.Status;
 import com.epam.edu.rentcar.entity.User;
+import com.epam.edu.rentcar.util.DataPreparator;
 
 public class Test {
 
@@ -59,28 +62,15 @@ public class Test {
 			
 			Order order = new Order(Long.valueOf(7), user1,	car, dateFrom, dateTo, 44.95, orderStatus);
 			postgreOrderDao.saveOrUpdate(conn, order);
-			
-
 			carStatus = carStatusDao.get(conn, 1L);
-			// user = postgreUserDao.get(conn, Long.valueOf(11));
-			// if (postgreCarDao.isExists(conn, 1L)){
-			// car = postgreCarDao.get(conn, 1L);
-			//
-			// }
-			//
-			// postgreUserDao.delete(conn, Long.valueOf(11));
-			//
-			// postgreCarDao.saveOrUpdate(conn, car1);
-			// postgreCarDao.delete(conn, 5L);
-			//
-			// postgreOrderDao.saveOrUpdate(conn, order);
-			//
-			// if (postgreUserDao.isExistsPassportNumber(conn,
-			// user1.getPassport())) {
-			// user = postgreUserDao.getByPassportNumber(conn,
-			// user1.getPassport());
-			// }
-			// userList = postgreUserDao.getAll(conn);
+			List<User> allUsers = postgreUserDao.getAll(conn);
+			
+			for (User entity: allUsers){
+				entity.setPassword(DataPreparator.encryptPassword(entity.getNickName()));
+			}
+			
+			postgreUserDao.saveOrUpdateAll(conn, allUsers);
+
 			 orderList = postgreOrderDao.getAll(conn);
 			// carList = postgreCarDao.getAll(conn);
 			// userList.get(1).setNickName("petrov");

@@ -1,6 +1,10 @@
 package com.epam.edu.rentcar.entity;
 
+import org.apache.log4j.Logger;
+
 public class Car extends AbstractEntity {
+	
+	private static Logger LOG = Logger.getLogger(Car.class);
  
 	private Double cost;
 	private String mark;

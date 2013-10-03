@@ -7,11 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.epam.edu.rentcar.dao.impl.StatusDao;
 import com.epam.edu.rentcar.entity.Status;
 
 public abstract class PostgreStatusDao<T extends Status> extends
 		PostgreEntityDao<Status> implements StatusDao<T> {
+	
+	private static Logger LOG = Logger.getLogger(PostgreStatusDao.class);
 
 	private final static String GET_BY_STATUS = "Select * from %s where %s=?";
 	private final static String UPDATE = "Update %s Set %s=? where id=?";

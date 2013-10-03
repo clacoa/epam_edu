@@ -7,16 +7,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.epam.edu.rentcar.dao.impl.UserDao;
 import com.epam.edu.rentcar.entity.Status;
 import com.epam.edu.rentcar.entity.User;
 
 public class PostgreUserDao extends PostgreEntityDao<User> implements
 		UserDao<User> {
+	
+	private static Logger LOG = Logger.getLogger(PostgreUserDao.class);
 
 	private final static String UPDATE = "Update users Set email=?, userpassword=?, nickname=?, firstname=?, lastname=?, passportnumber=?, roleid=? where id=?";
 	private final static String INSERT = "Insert into users (email, userpassword, nickname, firstname, lastname, passportnumber, roleid) values (?,?,?,?,?,?,?)";
-	private final static String GET_BY_COLUMN = "Select * from users where %s=?";
+	private final static String GET_BY_COLUMN = "Select * from users where upper(%s)=upper(?)";
 
 	private final static String TABLE_NAME = "users";
 	private final static String ID = "id";

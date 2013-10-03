@@ -1,11 +1,14 @@
 package com.epam.edu.rentcar.entity;
 
+import org.apache.log4j.Logger;
+
+import com.epam.edu.rentcar.util.Property;
+
 public abstract class AbstractEntity {
 	
 	
 	protected Long id;
-
-	
+		
 	public AbstractEntity(){
 	}
 	

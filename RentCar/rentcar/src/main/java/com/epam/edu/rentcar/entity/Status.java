@@ -1,6 +1,10 @@
 package com.epam.edu.rentcar.entity;
 
+import org.apache.log4j.Logger;
+
 public class Status extends AbstractEntity{
+	
+	private static Logger LOG = Logger.getLogger(Status.class);
 	
 	private String status;
 

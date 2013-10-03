@@ -7,11 +7,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.epam.edu.rentcar.dao.impl.CarDao;
 import com.epam.edu.rentcar.entity.Car;
 import com.epam.edu.rentcar.entity.Status;
 
 public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> {
+	
+	private static Logger LOG = Logger.getLogger(PostgreCarDao.class);
 	
 	public final static String UPDATE = "Update cars Set carcost=?, mark=?, model=?, description=?, statusid=? where id=?";
 	public final static String INSERT = "Insert into cars (carcost, mark, model, description, statusid) values (?,?,?,?,?)";

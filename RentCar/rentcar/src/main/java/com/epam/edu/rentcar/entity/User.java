@@ -1,9 +1,11 @@
 package com.epam.edu.rentcar.entity;
 
+import org.apache.log4j.Logger;
+
 
 public class User extends AbstractEntity {
 
-
+	private static Logger LOG = Logger.getLogger(User.class);
 
 	private String email;
 	private String password;
@@ -88,9 +90,5 @@ public class User extends AbstractEntity {
 				+ ", lastName=" + lastName + ", passport=" + passport
 				+ ",  " + role.toString() + "]";
 	}
-	
-
-
-
-	
+		
 }

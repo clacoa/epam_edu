@@ -7,11 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
 import com.epam.edu.rentcar.dao.GenericRentCarDao;
 import com.epam.edu.rentcar.entity.AbstractEntity;
 
 public abstract class PostgreEntityDao<T extends AbstractEntity> implements
 		GenericRentCarDao<T> {
+	
+	private static Logger LOG = Logger.getLogger(PostgreEntityDao.class);
 
 	public final static String GET_BY_ID = "Select * from %s where id=?";
 	public final static String DELETE_BY_ID = "Delete from %s where id=?";

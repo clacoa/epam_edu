@@ -2,9 +2,12 @@ package com.epam.edu.rentcar.entity;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class Order extends AbstractEntity {
 
-	//private Long carID;
+	private static Logger LOG = Logger.getLogger(Order.class);
+	
 	private Car car;
 	private Date dateFrom;
 	private Date dateTo;

@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.epam.edu.rentcar.dao.impl.OrderDao;
 import com.epam.edu.rentcar.entity.Car;
 import com.epam.edu.rentcar.entity.Order;
@@ -17,6 +19,8 @@ import com.epam.edu.rentcar.entity.User;
 public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 		OrderDao<Order> {
 
+	private static Logger LOG = Logger.getLogger(PostgreOrderDao.class);
+	
 	public final static String UPDATE = "Update orders Set userid=?, carid=?, datefrom=?, dateto=?, ordercost=?, statusid=? where id=?";
 	public final static String INSERT = "Insert into orders (userid, carid, datefrom, dateto, ordercost, statusid) values (?,?,?,?,?,?)";
 
