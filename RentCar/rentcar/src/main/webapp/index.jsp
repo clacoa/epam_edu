@@ -4,29 +4,35 @@
 <%@page import="com.epam.edu.rentcar.service.Test"
 	contentType="text/html;charset=utf-8"%>
 <%@page import="com.epam.edu.rentcar.entity.User"%>
+<%@page import="java.util.*"%>
+<%@taglib prefix="mytag" uri="WEB-INF/mytags.tld"%>
+<%@ taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
 <html>
-<body>
+<head>
+<link rel="stylesheet" type="text/css" href="rentcar.css">
+</head>
+<body style="height: 100%">
 	<jsp:useBean id="CarDao"
 		class="com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao"
 		scope="page"></jsp:useBean>
 
-	<%
-		String logPageName = "LoginForm.jsp";
-		if (session.getAttribute("user") != null) {
-			logPageName = "UserInfo.jsp";
-		}
-	%>
-	<jsp:include page="<%=logPageName%>" />
-	<%
-		String s = "";
-		s = Test.isExists();
-	%>
-	<DIV>
-		<%=s%>
-	</DIV>
+	<jsp:include page="/WEB-INF/Header.jsp" />
 
-	<h1>
-		<jsp:getProperty name="CarDao" property="tableName" /></h1>
-	<!--${CarDao.tableName}-->
+	<div class="content" >
+
+		<%
+			String s = "";
+			s = Test.isExists();
+		%>
+	
+			<c:out value="${user}" />
+	
+
+		<h1>
+			<jsp:getProperty name="CarDao" property="tableName" /></h1>
+		<!--${CarDao.tableName}-->
+		<mytag:Table />
+	</div>
+	<jsp:include page="/WEB-INF/Cellar.jsp" />
 </body>
 </html>

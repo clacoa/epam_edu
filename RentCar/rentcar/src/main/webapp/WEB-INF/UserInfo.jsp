@@ -6,20 +6,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="login.css">
+<link rel="stylesheet" type="text/css" href="rentcar.css">
 <script type="text/javascript" src="./js/rentcar.js"></script>
 </head>
 <body>
 	<%
-	    request.setAttribute("command", "login");
+		request.setAttribute("command", "login");
 		User user = (User) session.getAttribute("user");
 	%>
+
 	<div class="login">
-		<p>
-			You signed as
-			<%=user.getNickName()%>
-		</p>
-		<input type="image" src="./Images/logout.png" onclick="post_to_url('ControllerServlet',{'command':'logout'},'POST')">
+		<fieldset style="height: 100%">
+			<p>
+				You signed as
+				<%=user.getNickName()%>
+			</p>
+			<div class="button"
+				onclick="post_to_url('ControllerServlet',{'command':'logout'},'POST')">
+				<img src="./Images/logout.png" height="100%" align="left" /> Logout
+			</div>
+		</fieldset>
 	</div>
 </body>
 </html>

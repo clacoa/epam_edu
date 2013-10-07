@@ -5,16 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSP Page</title>
-<link rel="stylesheet" type="text/css" href="login.css">
+<link rel="stylesheet" type="text/css" href="rentcar.css">
 <script type="text/javascript">
-	function submitLoginForm(){
+	function submitLoginForm() {
 		LoginForm.submit();
 	}
 </script>
 </head>
 <body>
 	<div class="login">
-		<fieldset>
+		<fieldset  style="height: 100%">
 			<form name="LoginForm" action="ControllerServlet" method="post">
 				<table>
 					<tr>
@@ -35,7 +35,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><input type="image" src="./Images/login.png" onclick="submitLoginForm()"></td>
+						<td colspan="2">
+							<div class="button" onclick="submitLoginForm()">
+								<img src="./Images/login.png" height="100%" align="left" />
+								Login
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2"><a href="Registration.jsp">register</a></td>
