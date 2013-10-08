@@ -15,7 +15,6 @@
 				&& checkEmpty(RegistrationForm.firstName.value)
 				&& checkEmpty(RegistrationForm.lastName.value)
 				&& checkEmpty(RegistrationForm.passport.value)) {
-			alert("Submit");
 			RegistrationForm.submit();
 		}
 	}
@@ -62,15 +61,10 @@
 <body>
 	<jsp:getProperty property="regMessage" name="registration" />
 
-	<H1 id="error">
-		<%
-			registration.getRegMessage();
-		%>
-	</H1>
 	<div class="registration">
 		<center>
 			<fieldset>
-				<form name="RegistrationForm" action="ControllerServlet"
+				<form name="RegistrationForm" action="registration.controller"
 					method="post">
 					<h3 id="error">
 						<%
@@ -122,10 +116,9 @@
 							<td>*</td>
 						</tr>
 					</table>
-					<input name="command" type="hidden" value="registration" />
 				</form>
 				<div class="button" onclick="checkAndPost()">
-					<img src="./Images/plus.png" height="100%"" align="left" /> Register
+					<img src="./Images/plus.png" height="100%" align="left" /> Register
 				</div>
 			</fieldset>
 		</center>

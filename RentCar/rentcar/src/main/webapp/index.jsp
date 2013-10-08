@@ -10,29 +10,23 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="rentcar.css">
+<title>RentCar</title>
 </head>
 <body style="height: 100%">
 	<jsp:useBean id="CarDao"
 		class="com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao"
 		scope="page"></jsp:useBean>
 
-	<jsp:include page="/WEB-INF/Header.jsp" />
+	<jsp:include page="/WEB-INF/header.jsp" />
 
-	<div class="content" >
+	<div class="content" style="display: table;" >
 
-		<%
-			String s = "";
-			s = Test.isExists();
-		%>
 	
-			<c:out value="${user}" />
-	
-
 		<h1>
 			<jsp:getProperty name="CarDao" property="tableName" /></h1>
 		<!--${CarDao.tableName}-->
 		<mytag:Table />
 	</div>
-	<jsp:include page="/WEB-INF/Cellar.jsp" />
+	<jsp:include page="/WEB-INF/footer.jsp" />
 </body>
 </html>

@@ -8,9 +8,9 @@ import com.epam.edu.rentcar.service.LoginChecker;
 
 public class RegistrationCommand implements Command {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-		String redirect = "Registration.jsp";
+		String redirect = "/registration.jsp";
 		String msg = null;
 		String email = request.getParameter("email");
 		String nickName = request.getParameter("nickName");
@@ -34,12 +34,12 @@ public class RegistrationCommand implements Command {
 			msg = "Пользователь с такими паспортными данными уже зарегистрирован в базе";
 			break;
 		case 3:
-			request.setAttribute("user", LoginChecker.checkUser(email));
-			redirect = "index.jsp";
+			request.getSession().setAttribute("user", LoginChecker.checkUser(email));
+			redirect = "/index.jsp";
 			break;
 		}
 		request.setAttribute("msg", msg);
-		request.setAttribute("sendRedirect", redirect);
+		return redirect;
 
 	}
 

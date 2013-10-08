@@ -8,25 +8,26 @@ import com.epam.edu.rentcar.service.LoginChecker;
 
 public class LoginCommand implements Command {
 
-	public void execute(HttpServletRequest request,
+	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
-		String redirect = "Error.jsp";
-		String email = request.getParameter("email");
+		
+		String redirect = "/error.jsp";
+				String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
 		if (LoginChecker.checkUser(email) != null) {
 			if (LoginChecker.checkLogin(email, password)) {
 				request.getSession().setAttribute("user", LoginChecker.checkUser(email));
 			} else {
-				String msg = "Invalid Password";
+				String msg = "Invalid Email/Password";
 				request.setAttribute("msg", msg);
 			}
 		} else {
-			String msg = "Invalid Email";
+			String msg = "Invalid Email/Password";
 			request.setAttribute("msg", msg);
 		}
-		redirect="index.jsp";
-		request.setAttribute("sendRedirect", redirect);
+		redirect="/index.jsp";
+		return redirect;
 	}
 
 }

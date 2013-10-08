@@ -23,6 +23,7 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 	
 	public final static String UPDATE = "Update orders Set userid=?, carid=?, datefrom=?, dateto=?, ordercost=?, statusid=? where id=?";
 	public final static String INSERT = "Insert into orders (userid, carid, datefrom, dateto, ordercost, statusid) values (?,?,?,?,?,?)";
+	public final static String GET_CURRENT_FOR_CAR = "Select * from orders where carid=? and (statusid=1 or statusid=2)";
 
 	public final static String TABLE_NAME = "orders";
 	public final static String ID = "id";
@@ -156,6 +157,29 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 		} catch (Exception e) {
 		}
 		return orderList;
+	}
+	
+	public Order getCurrentOrder(Connection conn, Car car){
+		Order order=null;
+		try {
+			PreparedStatement pst = conn.prepareStatement(GET_CURRENT_FOR_CAR);
+			pst.setLong(1, car.getId());
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				Status orderStatus = pOrderStatusDao.get(conn,
+						Long.valueOf(rs.getString(STATUS_ID)));
+				User user = pUserDao.get(conn,
+						Long.valueOf(rs.getString(USER_ID)));
+				order = new Order(Long.valueOf(rs.getString(ID)), user, car,
+						format.parse(rs.getString(DATE_FROM)), format.parse(rs
+								.getString(DATE_TO)), Double.valueOf(rs
+								.getString(ORDER_COST)), orderStatus);
+			}
+			rs.close();
+			pst.close();
+		} catch (Exception ignore) {
+		}
+		return order;		
 	}
 
 }

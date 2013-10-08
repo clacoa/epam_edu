@@ -16,7 +16,7 @@ import com.epam.edu.rentcar.entity.Car;
 public class TableTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		JspWriter out = getJspContext().getOut();
-		PostgreCarDao carDao = new PostgreCarDao();
+ 		PostgreCarDao carDao = new PostgreCarDao();
 		List<Car> cars;
 		try {
 			cars = carDao.getAll(ConnectionPool.getInstance().getConnection());

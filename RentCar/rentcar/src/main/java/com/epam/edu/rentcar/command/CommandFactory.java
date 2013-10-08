@@ -28,7 +28,7 @@ public class CommandFactory {
 		commands.put("logout", new LogoutCommand());
 	}
 	
-	public void invoke(String commandName, HttpServletRequest request, HttpServletResponse response){
-		commands.get(commandName).execute(request, response);
+	public String invoke(String commandName, HttpServletRequest request, HttpServletResponse response){
+		return commands.get(commandName).execute(request, response);
 	}
 }

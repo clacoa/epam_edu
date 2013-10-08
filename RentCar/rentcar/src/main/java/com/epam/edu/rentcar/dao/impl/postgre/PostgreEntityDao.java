@@ -20,6 +20,8 @@ public abstract class PostgreEntityDao<T extends AbstractEntity> implements
 	public final static String GET_BY_ID = "Select * from %s where id=?";
 	public final static String DELETE_BY_ID = "Delete from %s where id=?";
 	public final static String GET_ALL = "Select * from %s";
+	public final static String GET_DISTINCT = "select distinct %s from %s";
+	public final static String GET_DISTINCT_WHERE = "select distinct %s from %s where %s like ?";
 
 	public boolean isExists(Connection conn, Long id) {
 		boolean isExists = false;

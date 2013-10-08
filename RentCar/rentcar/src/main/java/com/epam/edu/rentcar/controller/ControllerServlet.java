@@ -29,9 +29,9 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher(
-				request.getAttribute("sendRedirect").toString()).forward(
-				request, response);
+//		request.getRequestDispatcher(
+//				request.getAttribute("sendRedirect").toString()).forward(
+//				request, response);
 	}
 
 	/**
@@ -40,26 +40,30 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("UTF-8");
-		String command = request.getParameter("command");
-		CommandFactory.getInstance().invoke(command, request, response);
-		//response.sendRedirect(request.getAttribute("sendRedirect").toString());
-		request.getRequestDispatcher(
-				request.getAttribute("sendRedirect").toString()).forward(
-				request, response);
+
+//		request.setCharacterEncoding("UTF-8");
+//		String command = request.getParameter("command");
+//		String url=CommandFactory.getInstance().invoke(command, request, response);
+//		// response.sendRedirect(request.getAttribute("sendRedirect").toString());
+//		if (url != null){
+//		request.getRequestDispatcher(url).forward(
+//				request, response);
+//		}
 	}
-    protected String getActionName(HttpServletRequest request) {
-        String path = request.getServletPath();
-        return path.substring(1, path.lastIndexOf("."));
-   }
-	
-	public void service(HttpServletRequest request, HttpServletResponse response) 
+
+	protected String getActionName(HttpServletRequest request) {
+		String path = request.getServletPath();
+		return path.substring(1, path.lastIndexOf("."));
+	}
+
+	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		     Action action = factory.create(getActionName(request));
-		     String url = action.perform(request, response);
-		     if (url != null)
-		          getServletContext().getRequestDispatcher(url).forward(request, response);
-		}
+		request.setCharacterEncoding("UTF-8");
+		String url = CommandFactory.getInstance().invoke(
+				getActionName(request), request, response);
+		if (url != null)
+			getServletContext().getRequestDispatcher(url).forward(request,
+					response);
+	}
 
 }

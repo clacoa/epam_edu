@@ -1,5 +1,7 @@
 package com.epam.edu.rentcar.entity;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 
 public class Car extends AbstractEntity {
@@ -11,7 +13,7 @@ public class Car extends AbstractEntity {
 	private String model;
 	private String description;
 	private Status status;
-	
+	private Date availableDate;
 	
 	public Car(Long id, String mark, String model, Double cost, Status status){
 		this.id = id;
@@ -55,6 +57,12 @@ public class Car extends AbstractEntity {
 	public String toString() {
 		return "Car [cost=" + cost + ", mark=" + mark + ", model=" + model
 				+ ", description=" + description + ", " + status.toString() + "]";
+	}
+	public Date getAvailableDate() {
+		return availableDate;
+	}
+	public void setAvailableDate(Date availableDate) {
+		this.availableDate = availableDate;
 	}
 
 

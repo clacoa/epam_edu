@@ -8,12 +8,12 @@ import com.epam.edu.rentcar.service.LoginChecker;
 
 public class LogoutCommand implements Command {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		String redirect = "Error.jsp";
+		String redirect = "/error.jsp";
 		request.getSession().setAttribute("user", null);
-		redirect="index.jsp";
-		request.setAttribute("sendRedirect", redirect);
+		redirect="/index.jsp";
+		return redirect;
 	}
 
 }

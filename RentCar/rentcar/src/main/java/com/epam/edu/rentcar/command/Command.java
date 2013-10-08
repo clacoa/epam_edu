@@ -4,6 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface Command {
 
-	public void execute(HttpServletRequest request,
+	public String execute(HttpServletRequest request,
 			HttpServletResponse response);
 }
