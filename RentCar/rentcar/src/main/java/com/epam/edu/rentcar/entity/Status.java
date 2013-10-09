@@ -7,6 +7,10 @@ public class Status extends AbstractEntity{
 	private static Logger LOG = Logger.getLogger(Status.class);
 	
 	private String status;
+	
+	public Status(){
+		
+	}
 
 	public Status(Long id, String status) {
 		super(id);

@@ -4,16 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.epam.edu.rentcar.dao.impl.CarDao;
 import com.epam.edu.rentcar.entity.Car;
-import com.epam.edu.rentcar.entity.Order;
 import com.epam.edu.rentcar.entity.Status;
 
 public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> {
@@ -137,15 +134,15 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 		return carList;
 	}
 
-	public List<String> getDistinct(Connection conn, String colName) {
+	public List<String> getDistinct(Connection conn, String getColName) {
 		List<String> catalog = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
-					GET_DISTINCT, colName, getTableName()));
+					GET_DISTINCT, getColName, getTableName()));
 			ResultSet rs = pst.executeQuery();
 			catalog = new ArrayList<String>();
 			while (rs.next()) {
-				catalog.add(rs.getString(colName));
+				catalog.add(rs.getString(getColName));
 			}
 			rs.close();
 			pst.close();
@@ -155,16 +152,15 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 		return catalog;
 	}
 
-	public List<String> getDistinctWhere(Connection conn, String colName, String likeColName, String likeValue ) {
+	public List<String> getDistinct(Connection conn, String getColName, String addColName, String splitter) {
 		List<String> catalog = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
-					GET_DISTINCT_WHERE, colName, getTableName(), likeColName));
-			pst.setString(1,likeValue);
+					GET_DISTINCT,getColName+","+addColName, getTableName()));
 			ResultSet rs = pst.executeQuery();
 			catalog = new ArrayList<String>();
 			while (rs.next()) {
-				catalog.add(rs.getString(colName));
+				catalog.add(rs.getString(getColName)+splitter+rs.getString(addColName));
 			}
 			rs.close();
 			pst.close();

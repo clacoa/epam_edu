@@ -15,6 +15,9 @@ public class Car extends AbstractEntity {
 	private Status status;
 	private Date availableDate;
 	
+	public Car(){
+		
+	}
 	public Car(Long id, String mark, String model, Double cost, Status status){
 		this.id = id;
 		this.mark = mark;

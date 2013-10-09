@@ -15,6 +15,10 @@ public class Order extends AbstractEntity {
 	private Double orderCost;
 	private Double addCost;
 	private Status status;
+	
+	public Order(){
+		
+	}
 
 	public Order(Long id, User user, Car car, Date dateFrom, Date dateTo,
 			Double orderCost, Status status) {

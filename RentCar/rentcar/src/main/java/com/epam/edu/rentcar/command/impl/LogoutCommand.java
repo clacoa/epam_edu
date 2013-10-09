@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.edu.rentcar.command.Command;
-import com.epam.edu.rentcar.service.LoginChecker;
 
 public class LogoutCommand implements Command {
 

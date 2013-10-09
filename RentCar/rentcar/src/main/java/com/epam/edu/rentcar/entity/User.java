@@ -14,6 +14,10 @@ public class User extends AbstractEntity {
 	private String lastName;
 	private String passport;
 	private Status role;
+	
+	public User(){
+		
+	}
 
 	public User(Long id, String email, String password, String nickName,
 			String firstName, String lastName, String passport, Status role) {

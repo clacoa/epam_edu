@@ -12,18 +12,13 @@
 		<tag-class>com.epam.edu.rentcar.tags.CarsTable</tag-class>
 		<body-content>scriptless</body-content>
 		<attribute>
-			<name>mark</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>model</name>
-			<required>true</required>
+			<name>filter</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>id</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

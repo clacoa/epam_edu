@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.edu.rentcar.command.CommandFactory;
-import com.epam.edu.rentcar.service.LoginChecker;
 
 /**
  * Servlet implementation class LoginForm
