@@ -31,3 +31,28 @@ function post_to_url_params(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
+function getSelect(paramName) {
+	var select;
+	var result;
+	select=document.getElementsByName(paramName)[0];
+	result=select.options[select.selectedIndex].value;
+	return result;
+}
+
+function setSelect(paramName,paramValue) {
+	var select;
+	select=document.getElementsByName(paramName)[0];
+	for (var i=0;i<select.options.length;i++) {
+		if(select.options[i].value==paramValue){
+			select.selectedIndex=i;
+			return;
+		}
+	}
+}
+function getInput(paramName) {
+	var input;
+	var result;
+	input=document.getElementsByName(paramName)[0];
+	result=input.value;
+	return result;
+}
