@@ -28,7 +28,8 @@ public class CarsTable extends SimpleTagSupport {
 	private PostgreOrderDao orderDao = new PostgreOrderDao();
 	private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 	private Calendar calendar = Calendar.getInstance();
-	private String splitter = "~";
+	public final static String SPLITTER = "~";
+
 
 	public void setFilter(CarFilter filter) {
 		this.filter = filter;
@@ -41,7 +42,7 @@ public class CarsTable extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		try {
 			Connection conn = ConnectionPool.getInstance().getConnection();
-			printModelFilter(ModelFilter(conn));
+			printFilter(conn);
 			printTable(createTableData(conn));
 
 		} catch (Exception e) {
@@ -89,7 +90,7 @@ public class CarsTable extends SimpleTagSupport {
 		List<String> models = new ArrayList<String>();
 
 		models = carDao.getDistinct(conn, PostgreCarDao.MARK,
-				PostgreCarDao.MODEL, splitter);
+				PostgreCarDao.MODEL, SPLITTER);
 		return models;
 
 	}
@@ -150,18 +151,49 @@ public class CarsTable extends SimpleTagSupport {
 	private void printModelFilter(List<String> models) throws IOException {
 
 		JspWriter out = getJspContext().getOut();
-		out.println("<div style='display: inline-block;'>");
-		out.println("<select id='modelSelect'>");
+		out.println("<select id='modelSelect' name='modelSelect'>");
 		out.println("<option value=''>Select model</option>");
-		out.println("");
-		out.println("");
 		if (models != null) {
 			for (String model : models) {
 				out.println("<option value='" + model + "'>"
-						+ model.replace(splitter, " ") + "</option>");
+						+ model.replace(SPLITTER, " ") + "</option>");
 			}
 		}
 		out.println("</select>");
+	}
+
+	private void printCostFilter() throws IOException {
+
+		JspWriter out = getJspContext().getOut();
+		out.println("<select name='costSelect'>");
+		out.println("<option value=''>Select cost</option>");
+		out.println("<option value='0"+SPLITTER+"10000'>0-10000</option>");
+		out.println("<option value='10000"+SPLITTER+"30000'>10000-30000</option>");
+		out.println("<option value='30000"+SPLITTER+"50000'>30000-50000</option>");
+		out.println("<option value='50000"+SPLITTER+"10000000'>more then 50000</option>");
+		out.println("</select>");
+	}
+
+	private void printDescriptionFilter() throws IOException {
+
+		JspWriter out = getJspContext().getOut();
+		out.println("<input type='text' name='descriptionFilter' value='Enter any description'>");
+	}
+
+	private void printSearchButton() throws IOException {
+		JspWriter out = getJspContext().getOut();
+		String params="";
+		//out.println("<div class='button' onclick=\"post_to_url_params('searchcar.controller','GET')\"> <img src='./Images/search.png' height='100%' align='left'> Search</div>");
+	}
+
+	private void printFilter(Connection conn) throws IOException {
+		JspWriter out = getJspContext().getOut();
+		out.println("<div style='display: inline-block;'>");
+		printModelFilter(ModelFilter(conn));
+		printCostFilter();
+		printDescriptionFilter();
+		printSearchButton();
 		out.println("</div>");
+
 	}
 }

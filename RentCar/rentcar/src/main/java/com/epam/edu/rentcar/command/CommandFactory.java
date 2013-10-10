@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.edu.rentcar.command.impl.LoginCommand;
 import com.epam.edu.rentcar.command.impl.LogoutCommand;
 import com.epam.edu.rentcar.command.impl.RegistrationCommand;
+import com.epam.edu.rentcar.command.impl.SearchCarCommand;
 
 
 public class CommandFactory {
@@ -26,6 +27,7 @@ public class CommandFactory {
 		commands.put("login", new LoginCommand());
 		commands.put("registration", new RegistrationCommand());
 		commands.put("logout", new LogoutCommand());
+		commands.put("searchcar", new SearchCarCommand());
 	}
 	
 	public String invoke(String commandName, HttpServletRequest request, HttpServletResponse response){
