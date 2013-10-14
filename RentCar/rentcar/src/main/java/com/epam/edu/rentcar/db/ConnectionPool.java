@@ -14,7 +14,7 @@ public class ConnectionPool {
 
 	private static Logger LOG = Logger.getLogger(ConnectionPool.class);
 
-	private static ConnectionPool instance;
+	private static volatile ConnectionPool instance;
 	private DataSource datasource;
 
 	public ConnectionPool() {
@@ -44,7 +44,11 @@ public class ConnectionPool {
 
 	public static ConnectionPool getInstance() {
 		if (instance == null) {
-			instance = new ConnectionPool();
+	//		synchronized (ConnectionPool.class) {
+	//			if (instance == null) {
+					instance = new ConnectionPool();
+	//			}
+	//		}
 		}
 		return instance;
 	}

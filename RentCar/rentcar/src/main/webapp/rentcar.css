@@ -10,6 +10,14 @@
 	text-align: center;
 }
 
+.filter {
+	background: #E3E3E3;
+	padding: 5px;
+	border: solid 1px #444444;
+	float: right;
+	text-align: center;
+}
+
 .header {
 	height: 100%;
 	background: #E3E3E3;
@@ -31,7 +39,6 @@
 }
 
 .button {
-	width: 80px;
 	height: 20px;
 	background: #F7F7F7;
 	padding: 5px;
@@ -41,10 +48,11 @@
 	vertical-align: middle;
 	font-size: 14px;
 	display: inline-block;
+	cursor: pointer;
 }
 
 .row2 {
-	background: #D4D0C8;
+	background: #E3E3E3;
 }
 
 .menu {
@@ -52,11 +60,17 @@
 	background: #D4D0C8;
 	text-align: center;
 	vertical-align: bottom;
-	border: solid 1px #444444;
 	font-size: 18px;
+	background: #D4D0C8;
 }
 
-.content{
+.content {
 	overflow-y: scroll;
-	height: 500px; 
+	height: 500px;
+}
+
+.language {
+	background: #E3E3E3;
+	float: right;
+	text-align: center;
 }

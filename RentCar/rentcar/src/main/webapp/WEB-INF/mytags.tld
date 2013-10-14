@@ -2,11 +2,7 @@
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
 	<short-name>my TLD</short-name>
-	<tag>
-		<name>Table</name>
-		<tag-class>com.epam.edu.rentcar.tags.TableTag</tag-class>
-		<body-content>scriptless</body-content>
-	</tag>
+
 	<tag>
 		<name>CarsTable</name>
 		<tag-class>com.epam.edu.rentcar.tags.CarsTable</tag-class>
@@ -16,6 +12,16 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>CarsFilter</name>
+		<tag-class>com.epam.edu.rentcar.tags.CarsFilter</tag-class>
+		<body-content>scriptless</body-content>
 		<attribute>
 			<name>id</name>
 			<required>false</required>

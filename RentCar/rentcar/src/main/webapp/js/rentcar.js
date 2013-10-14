@@ -49,10 +49,17 @@ function setSelect(paramName,paramValue) {
 		}
 	}
 }
-function getInput(paramName) {
+function getInputValue(paramName) {
 	var input;
 	var result;
 	input=document.getElementsByName(paramName)[0];
 	result=input.value;
 	return result;
+}
+
+function setInputValue(paramName,value) {
+	var input;
+	var result;
+	input=document.getElementsByName(paramName)[0];
+	input.value=value;	
 }

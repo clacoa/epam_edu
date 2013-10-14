@@ -7,6 +7,7 @@
 <%@page import="java.util.*"%>
 <%@taglib prefix="mytag" uri="WEB-INF/mytags.tld"%>
 <%@ taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
+<%request.getSession().setAttribute("prevUrl",request.getServletPath().toString());%>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="rentcar.css">
@@ -25,7 +26,7 @@
 		<h1>
 			<jsp:getProperty name="CarDao" property="tableName" /></h1>
 		<!--${CarDao.tableName}-->
-		<mytag:Table />
+	
 	</div>
 	<jsp:include page="/WEB-INF/footer.jsp" />
 </body>

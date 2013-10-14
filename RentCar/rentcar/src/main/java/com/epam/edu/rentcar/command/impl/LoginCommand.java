@@ -10,14 +10,16 @@ public class LoginCommand implements Command {
 
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+
 		String redirect = "/error.jsp";
-				String email = request.getParameter("email");
+
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
 		if (LoginChecker.checkUser(email) != null) {
 			if (LoginChecker.checkLogin(email, password)) {
-				request.getSession().setAttribute("user", LoginChecker.checkUser(email));
+				request.getSession().setAttribute("user",
+						LoginChecker.checkUser(email));
 			} else {
 				String msg = "Invalid Email/Password";
 				request.setAttribute("msg", msg);
@@ -26,7 +28,10 @@ public class LoginCommand implements Command {
 			String msg = "Invalid Email/Password";
 			request.setAttribute("msg", msg);
 		}
-		redirect="/index.jsp";
+		Object prevUrl = request.getSession().getAttribute("prevUrl");
+		if (prevUrl != null) {
+			redirect = prevUrl.toString();
+		}
 		return redirect;
 	}
 

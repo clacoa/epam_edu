@@ -4,6 +4,16 @@
 
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
+	<filter>
+		<filter-name>LocalFilter</filter-name>
+		<display-name>LocalFilter</display-name>
+		<description></description>
+		<filter-class>com.epam.edu.rentcar.filter.LocalFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LocalFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>ControllerServlet</servlet-name>
 		<display-name>ControllerServlet</display-name>

@@ -10,7 +10,7 @@ public class RegistrationCommand implements Command {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-		String redirect = "/registration.jsp";
+		String redirect = "/index.jsp";
 		String msg = null;
 		String email = request.getParameter("email");
 		String nickName = request.getParameter("nickName");
@@ -26,16 +26,22 @@ public class RegistrationCommand implements Command {
 		switch (result) {
 		case 0:
 			msg = "Введенные пароли не совпадают";
+			redirect = "/registration.jsp";
 			break;
 		case 1:
 			msg = "Данный email уже зарегистрирован в базе";
+			redirect = "/registration.jsp";
 			break;
 		case 2:
 			msg = "Пользователь с такими паспортными данными уже зарегистрирован в базе";
+			redirect = "/registration.jsp";
 			break;
 		case 3:
 			request.getSession().setAttribute("user", LoginChecker.checkUser(email));
-			redirect = "/index.jsp";
+			Object prevUrl = request.getSession().getAttribute("prevUrl");
+			if (prevUrl != null) {
+				redirect = prevUrl.toString();
+			}
 			break;
 		}
 		request.setAttribute("msg", msg);
