@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:useBean id="registration"
-	class="com.epam.edu.rentcar.bean.RegistrationBean" scope="session"></jsp:useBean>
+<%@page import="com.epam.edu.rentcar.util.CommonBundle"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
+<%@ taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	request.getSession().setAttribute("prevUrl",request.getServletPath().toString());
+	String locale = request.getSession().getAttribute("language") != null ? request.getSession().getAttribute("language").toString(): "ru";
+%>
+<fmt:setLocale value="${language}" /> 
+<fmt:bundle basename="i18n" prefix="registration.">
 <html>
 <head>
 <script type="text/javascript" src="./js/rentcar.js"></script>
@@ -25,13 +33,13 @@
 		if (pattern.test(RegistrationForm.email.value)) {
 			return true;
 		} else {
-			alert("Enter your email");
+			alert('<%=CommonBundle.getProperty("enteremail", new Locale(locale))%>');
 			return false;
 		}
 	}
 	function checkEmpty(inputvalue) {
 		if (!inputvalue) {
-			alert("Empty field " + inputvalue);
+			alert('<%=CommonBundle.getProperty("mandatory", new Locale(locale))%>');
 			return false;
 		} else {
 			return true;
@@ -39,7 +47,7 @@
 	}
 	function chekPassword() {
 		if (RegistrationForm.password.value != RegistrationForm.passwordRepeat.value) {
-			alert("The passwords do not match");
+			alert('<%=CommonBundle.getProperty("passwordsfail", new Locale(locale))%>');
 			return false;
 		} else {
 			return true;
@@ -47,7 +55,7 @@
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title><fmt:message key="title" /></title>
 <link rel="stylesheet" type="text/css" href="rentcar.css">
 <style type="text/css">
 .registration {
@@ -60,8 +68,7 @@
 </style>
 </head>
 <body>
-	<jsp:getProperty property="regMessage" name="registration" />
-
+	<jsp:include page="/WEB-INF/header.jsp" />
 	<div class="registration">
 		<center>
 			<fieldset>
@@ -71,58 +78,58 @@
 						<%
 							if (request.getAttribute("msg") != null) {
 								out.println(request.getAttribute("msg"));
-							} else {
-								out.println("Register Page");
 							}
 						%>
 					</h3>
 
 					<legend>
-						<h2>Create you personal account</h2>
+						<h2><fmt:message key="legend" /></h2>
 					</legend>
 					<table>
 						<tr>
-							<td>Email:</td>
+							<td><fmt:message key="email" /></td>
 							<td><input type="text" name="email"></td>
 							<td>*</td>
 						</tr>
 						<tr>
-							<td>NickName:</td>
+							<td><fmt:message key="nick" /></td>
 							<td><input type="text" name="nickName"></td>
 							<td>*</td>
 						</tr>
 						<tr>
-							<td>Password:</td>
+							<td><fmt:message key="password" /></td>
 							<td><input type="password" name="password"></td>
 							<td>*</td>
 						</tr>
 						<tr>
-							<td>Repeat Password:</td>
+							<td><fmt:message key="repeatpassword" /></td>
 							<td><input type="password" name="passwordRepeat"></td>
 							<td>*</td>
 						</tr>
 						<tr>
-							<td>FirstName:</td>
+							<td><fmt:message key="firstname" /></td>
 							<td><input type="text" name="firstName"></td>
 							<td>*</td>
 						</tr>
 						<tr>
-							<td>LastName:</td>
+							<td><fmt:message key="lastname" /></td>
 							<td><input type="text" name="lastName"></td>
 							<td>*</td>
 						</tr>
 						<tr>
-							<td>Passport:</td>
+							<td><fmt:message key="passport" /></td>
 							<td><input type="text" name="passport"></td>
 							<td>*</td>
 						</tr>
 					</table>
 				</form>
 				<div class="button" onclick="checkAndPost()">
-					<img src="./Images/plus.png" height="100%" align="left" /> Register
+					<img src="./Images/plus.png" height="100%" align="left" /> <fmt:message key="register" />
 				</div>
 			</fieldset>
 		</center>
 	</div>
+	<jsp:include page="/WEB-INF/footer.jsp" />
 </body>
 </html>
+</fmt:bundle>

@@ -2,6 +2,7 @@ package com.epam.edu.rentcar.command.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.epam.edu.rentcar.command.Command;
 import com.epam.edu.rentcar.db.ConnectionPool;
 import com.epam.edu.rentcar.service.LoginChecker;
+import com.epam.edu.rentcar.util.CommonBundle;
 
 public class RegistrationCommand implements Command {
 	
@@ -28,6 +30,8 @@ public class RegistrationCommand implements Command {
 		String lastName = request.getParameter("lastName");
 		String passport = request.getParameter("passport");
 		Connection conn = null;
+		String language = request.getSession().getAttribute("language")!=null ? request.getSession().getAttribute("language").toString():"ru";
+		Locale locale = new Locale(language);
 		
 		try {
 			conn = ConnectionPool.getInstance().getConnection();
@@ -35,15 +39,15 @@ public class RegistrationCommand implements Command {
 					passwordRepeat, firstName, lastName, passport);
 			switch (result) {
 			case 0:
-				msg = "Введенные пароли не совпадают";
+				msg = CommonBundle.getProperty("msg.password",	locale);
 				redirect = "/registration.jsp";
 				break;
 			case 1:
-				msg = "Данный email уже зарегистрирован в базе";
+				msg = CommonBundle.getProperty("msg.email",	locale);
 				redirect = "/registration.jsp";
 				break;
 			case 2:
-				msg = "Пользователь с такими паспортными данными уже зарегистрирован в базе";
+				msg = CommonBundle.getProperty("msg.passport",	locale);
 				redirect = "/registration.jsp";
 				break;
 			case 3:

@@ -12,11 +12,8 @@
 <%@taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%
-	request.getSession().setAttribute("prevUrl",
-			request.getServletPath().toString());
-	String locale = request.getSession().getAttribute("language") != null ? request
-			.getSession().getAttribute("language").toString()
-			: "ru";
+	request.getSession().setAttribute("prevUrl",request.getServletPath().toString());
+	String locale = request.getSession().getAttribute("language") != null ? request.getSession().getAttribute("language").toString(): "ru";
 	OrderData orderData = (OrderData) session.getAttribute("orderData");
 	CarData carData = orderData != null ? orderData.getCarData() : null;
 

@@ -2,6 +2,7 @@ package com.epam.edu.rentcar.command.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.epam.edu.rentcar.command.Command;
 import com.epam.edu.rentcar.db.ConnectionPool;
 import com.epam.edu.rentcar.service.LoginChecker;
+import com.epam.edu.rentcar.util.CommonBundle;
 
 public class LoginCommand implements Command {
 	
@@ -20,9 +22,10 @@ public class LoginCommand implements Command {
 			HttpServletResponse response) {
 
 		String redirect = "/error.jsp";
-
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String language = request.getSession().getAttribute("language")!=null ? request.getSession().getAttribute("language").toString():"ru";
+		Locale locale = new Locale(language);
 		Connection conn = null;
 		try {
 			conn = ConnectionPool.getInstance().getConnection();
@@ -31,11 +34,11 @@ public class LoginCommand implements Command {
 					request.getSession().setAttribute("user",
 							LoginChecker.checkUser(conn,email));
 				} else {
-					String msg = "Invalid Email/Password";
+					String msg = CommonBundle.getProperty("errormsg",	locale);
 					request.setAttribute("msg", msg);
 				}
 			} else {
-				String msg = "Invalid Email/Password";
+				String msg = CommonBundle.getProperty("errormsg",	locale);
 				request.setAttribute("msg", msg);
 			}
 		} catch (Exception e) {
