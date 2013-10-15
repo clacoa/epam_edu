@@ -6,28 +6,25 @@
 <%@page import="com.epam.edu.rentcar.entity.User"%>
 <%@page import="java.util.*"%>
 <%@taglib prefix="mytag" uri="WEB-INF/mytags.tld"%>
-<%@ taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
-<%request.getSession().setAttribute("prevUrl",request.getServletPath().toString());%>
+<%@taglib uri='http://java.sun.com/jstl/core' prefix='c'%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
+<%
+	request.getSession().setAttribute("prevUrl",
+			request.getServletPath().toString());
+%>
 <html>
-<head>
+<fmt:setLocale value="${language}" />
+<fmt:bundle basename="i18n">
+	<head>
 <link rel="stylesheet" type="text/css" href="rentcar.css">
-<title>RentCar</title>
-</head>
-<body style="height: 100%">
-	<jsp:useBean id="CarDao"
-		class="com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao"
-		scope="page"></jsp:useBean>
+<title><fmt:message key="hello" /></title>
+	</head>
+	<body style="height: 100%">
+		<jsp:include page="/WEB-INF/header.jsp" />
+		<div class="content" style="display: table;">
 
-	<jsp:include page="/WEB-INF/header.jsp" />
-
-	<div class="content" style="display: table;" >
-
-	
-		<h1>
-			<jsp:getProperty name="CarDao" property="tableName" /></h1>
-		<!--${CarDao.tableName}-->
-	
-	</div>
-	<jsp:include page="/WEB-INF/footer.jsp" />
-</body>
+		</div>
+		<jsp:include page="/WEB-INF/footer.jsp" />
+	</body>
+</fmt:bundle>
 </html>

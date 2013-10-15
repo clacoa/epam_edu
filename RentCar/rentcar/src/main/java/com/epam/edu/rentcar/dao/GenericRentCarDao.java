@@ -5,22 +5,23 @@ import java.util.Collection;
 import java.util.List;
 
 import com.epam.edu.rentcar.entity.AbstractEntity;
+import com.epam.edu.rentcar.exception.DaoException;
 
 public interface GenericRentCarDao<T extends AbstractEntity> {
 
-	public T get(Connection conn, Long id);
+	public T get(Connection conn, Long id) throws DaoException;
 
-	public List<T> getAll(Connection conn);
+	public List<T> getAll(Connection conn) throws DaoException;
 
-	public void saveOrUpdate(Connection conn, T entity);
+	public void saveOrUpdate(Connection conn, T entity) throws DaoException;
 
-	public void saveOrUpdateAll(Connection conn, Collection<T> entities);
+	public void saveOrUpdateAll(Connection conn, Collection<T> entities) throws DaoException;
 
-	public void delete(Connection conn, Long id);
+	public void delete(Connection conn, Long id) throws DaoException;
 
-	public boolean isExists(Connection conn, Long id);
+	public boolean isExists(Connection conn, Long id) throws DaoException;
 	
-	public List<T> findByNamedQuery(Connection conn, String queryName);
+	public List<T> findByNamedQuery(Connection conn, String queryName) throws DaoException;
 	
 	public String getTableName();
 	

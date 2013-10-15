@@ -2,6 +2,8 @@ package com.epam.edu.rentcar.model;
 
 import java.util.Date;
 
+import com.epam.edu.rentcar.entity.Car;
+
 
 public class CarData {
 private Long id;
@@ -22,6 +24,13 @@ public CarData(Long id, String modelName, Double cost, Long status) {
 	this.modelName = modelName;
 	this.cost = cost;
 	this.status = status;
+}
+public CarData(Car car){
+	this.id = car.getId();
+	this.modelName = car.getMark()+" "+car.getModel();
+	this.cost = car.getCost();
+	this.status = car.getStatus().getId();
+	this.description=car.getDescription();
 }
 
 public Long getId() {

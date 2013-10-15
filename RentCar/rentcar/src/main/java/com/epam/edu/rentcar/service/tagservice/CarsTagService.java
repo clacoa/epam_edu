@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreOrderDao;
+import com.epam.edu.rentcar.dao.impl.postgre.PostgreUserDao;
 import com.epam.edu.rentcar.db.ConnectionPool;
 import com.epam.edu.rentcar.entity.Car;
 import com.epam.edu.rentcar.entity.Order;
@@ -21,36 +23,26 @@ import com.epam.edu.rentcar.util.CommonBundle;
 
 public class CarsTagService {
 
-	// private CarFilter filter;
+	private static Logger LOG = Logger.getLogger(CarsTagService.class);
 	private String id;
 	private PostgreCarDao carDao = new PostgreCarDao();
 	private PostgreOrderDao orderDao = new PostgreOrderDao();
 	private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 	private Calendar calendar = Calendar.getInstance();
-	private Connection conn;
 
 	public final static String SPLITTER = "~";
 
-	public CarsTagService() {
-
-		carDao = new PostgreCarDao();
-		orderDao = new PostgreOrderDao();
-		try {
-			conn = ConnectionPool.getInstance().getConnection();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public List<CarData> createTableData(CarFilter filter, Locale locale) {
+	public List<CarData> createCarsTableData(Connection conn, CarFilter filter, Locale locale) {
 
 		List<CarData> carDataList = null;
 		List<Car> cars = null;
 		List<Car> filterList = null;
 
-		cars = carDao.getAll(conn);
+		try {
+			cars = carDao.getAll(conn);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+		}
 
 		carDataList = new ArrayList<CarData>();
 		if (cars != null) {
@@ -71,8 +63,8 @@ public class CarsTagService {
 						&& (filter.getMaxCost() != null)) {
 					filterList = new ArrayList<Car>();
 					for (Car car : cars) {
-						if ((car.getCost()>=filter.getMinCost() )
-								&& (car.getCost()<= filter.getMaxCost())) {
+						if ((car.getCost() >= filter.getMinCost())
+								&& (car.getCost() <= filter.getMaxCost())) {
 							filterList.add(car);
 						}
 					}
@@ -102,11 +94,15 @@ public class CarsTagService {
 				carData.setDescription(car.getDescription());
 				carData.setCost(car.getCost());
 				carData.setStatus(car.getStatus().getId());
-				Order order = orderDao.getCurrentOrder(conn, car);
-				if (order != null) {
-					calendar.setTime(order.getDateTo());
-					calendar.add(Calendar.DATE, 1);
-					carData.setAvailableDate(calendar.getTime());
+				try {
+					Order order = orderDao.getCurrentOrder(conn, car);
+					if (order != null) {
+						calendar.setTime(order.getDateTo());
+						calendar.add(Calendar.DATE, 1);
+						carData.setAvailableDate(calendar.getTime());
+					}
+				} catch (Exception e) {
+					LOG.error(e.getMessage(),e);
 				}
 				carData.setAction(setCarAction(carData, locale));
 				carDataList.add(carData);
@@ -116,12 +112,16 @@ public class CarsTagService {
 		return carDataList;
 	}
 
-	public List<PrintElement> ModelFilter() {
+	public List<PrintElement> ModelFilter(Connection conn) {
 
 		List<String> models = new ArrayList<String>();
 		List<PrintElement> printElements = null;
-		models = carDao.getDistinct(conn, PostgreCarDao.MARK,
-				PostgreCarDao.MODEL, SPLITTER);
+		try {
+			models = carDao.getDistinct(conn, PostgreCarDao.MARK,
+					PostgreCarDao.MODEL, SPLITTER);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(),e);
+		}
 		if (models != null) {
 			printElements = new ArrayList<PrintElement>();
 			for (String model : models) {
@@ -154,16 +154,21 @@ public class CarsTagService {
 	private String setCarAction(CarData car, Locale locale) {
 		String action = null;
 		if (car.getStatus() == 2L) {
-			action = "<div class='button' onclick='checkAndPost()'>"
-					+ " <img src='./Images/check.png' height='100%' align='left' />"
-					+"&nbsp" +CommonBundle.getProperty("cars.filter.action.button", locale)+"</div>";
+			action = "<div class='button' onclick=\"post_to_url_params('carbooking.controller',{'carid':"+car.getId().toString()+"},'POST')\">"
+					+ " <img src='./Images/suppliers.png' height='100%' align='left' />"
+					+ "&nbsp"
+					+ CommonBundle.getProperty("cars.filter.action.button",
+							locale) + "</div>";
 		} else if (car.getStatus() == 1L) {
 			if (car.getAvailableDate() != null) {
-				action = CommonBundle.getProperty("cars.filter.action.available", locale)+" "
+				action = CommonBundle.getProperty(
+						"cars.filter.action.available", locale)
+						+ " "
 						+ format.format(car.getAvailableDate()).toString();
 			}
 		} else if (car.getStatus() == 3L) {
-			action = CommonBundle.getProperty("cars.filter.action.notavailable", locale);
+			action = CommonBundle.getProperty(
+					"cars.filter.action.notavailable", locale);
 		}
 		return action;
 	}

@@ -65,6 +65,11 @@ public class Car extends AbstractEntity {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+	public String getCarInfo(){
+		
+		return mark+" "+model+" "+description;
+	}
 
 	@Override
 	public String toString() {

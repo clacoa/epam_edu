@@ -11,7 +11,9 @@ public class Status extends AbstractEntity{
 	public Status(){
 		
 	}
-
+	public Status(Long id) {
+		super(id);
+	}
 	public Status(Long id, String status) {
 		super(id);
 		this.status = status;

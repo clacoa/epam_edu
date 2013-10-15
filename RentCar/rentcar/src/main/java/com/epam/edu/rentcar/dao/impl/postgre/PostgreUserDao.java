@@ -9,9 +9,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.epam.edu.rentcar.dao.impl.UserDao;
+import com.epam.edu.rentcar.dao.UserDao;
 import com.epam.edu.rentcar.entity.Status;
 import com.epam.edu.rentcar.entity.User;
+import com.epam.edu.rentcar.exception.DaoException;
 
 public class PostgreUserDao extends PostgreEntityDao<User> implements
 		UserDao<User> {
@@ -41,7 +42,7 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 
 	}
 
-	public User get(Connection conn, Long id) {
+	public User get(Connection conn, Long id) throws DaoException {
 		User user = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -57,12 +58,13 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return user;
 	}
 
-	public List<User> getAll(Connection conn) {
+	public List<User> getAll(Connection conn) throws DaoException {
 		List<User> userList = null;
 		User user = null;
 		try {
@@ -81,11 +83,12 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 			rs.close();
 			pst.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return userList;
 	}
 
-	public void saveOrUpdate(Connection conn, User entity) {
+	public void saveOrUpdate(Connection conn, User entity) throws DaoException {
 		int updateResult;
 		PreparedStatement pst;
 		try {
@@ -113,11 +116,12 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 				updateResult = pst.executeUpdate();
 				pst.close();
 			}
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 	}
 
-	public List<User> findByNamedQuery(Connection conn, String queryName) {
+	public List<User> findByNamedQuery(Connection conn, String queryName) throws DaoException {
 		List<User> userList = null;
 		User user = null;
 		try {
@@ -134,34 +138,34 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 			}
 			rs.close();
 			st.close();
-		} catch (Exception ignore) {
-
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return userList;
 	}
 
-	public User getByEmail(Connection conn, String email) {
+	public User getByEmail(Connection conn, String email) throws DaoException {
 		User user = getByColumnName(conn, EMAIL, email);
 		return user;
 	}
 
-	public boolean isExistsEmail(Connection conn, String email) {
+	public boolean isExistsEmail(Connection conn, String email) throws DaoException {
 		boolean isExists = isExistsByColumnName(conn, EMAIL, email);
 		return isExists;
 	}
 
-	public User getByPassportNumber(Connection conn, String passportNumber) {
+	public User getByPassportNumber(Connection conn, String passportNumber) throws DaoException {
 		User user = getByColumnName(conn, PASSPORT, passportNumber);
 		return user;
 	}
 
-	public boolean isExistsPassportNumber(Connection conn, String passportNumber) {
+	public boolean isExistsPassportNumber(Connection conn, String passportNumber) throws DaoException {
 		boolean isExists = isExistsByColumnName(conn, PASSPORT, passportNumber);
 		return isExists;
 	}
 
 	private boolean isExistsByColumnName(Connection conn, String column,
-			String value) {
+			String value) throws DaoException {
 		boolean isExists = false;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -173,12 +177,13 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return isExists;
 	}
 
-	private User getByColumnName(Connection conn, String column, String value) {
+	private User getByColumnName(Connection conn, String column, String value) throws DaoException {
 		User user = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -195,6 +200,7 @@ public class PostgreUserDao extends PostgreEntityDao<User> implements
 			rs.close();
 			pst.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return user;
 	}

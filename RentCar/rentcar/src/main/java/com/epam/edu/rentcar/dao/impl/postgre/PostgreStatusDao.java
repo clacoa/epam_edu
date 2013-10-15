@@ -9,8 +9,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.epam.edu.rentcar.dao.impl.StatusDao;
+import com.epam.edu.rentcar.dao.StatusDao;
 import com.epam.edu.rentcar.entity.Status;
+import com.epam.edu.rentcar.exception.DaoException;
 
 public abstract class PostgreStatusDao<T extends Status> extends
 		PostgreEntityDao<Status> implements StatusDao<T> {
@@ -27,7 +28,7 @@ public abstract class PostgreStatusDao<T extends Status> extends
 		return "";
 	}
 	
-	public Status get(Connection conn, Long id) {
+	public Status get(Connection conn, Long id) throws DaoException {
 		Status entity = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(GET_BY_ID, getTableName()));
@@ -38,12 +39,13 @@ public abstract class PostgreStatusDao<T extends Status> extends
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return entity;
 	}
 	
-	public List<Status> getAll(Connection conn) {
+	public List<Status> getAll(Connection conn) throws DaoException {
 		List<Status> statusList = null;
 		Status status = null;
 		try {
@@ -58,11 +60,12 @@ public abstract class PostgreStatusDao<T extends Status> extends
 			rs.close();
 			pst.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return statusList;
 	}
 	
-	public void saveOrUpdate(Connection conn, Status entity) {
+	public void saveOrUpdate(Connection conn, Status entity) throws DaoException {
 		int updateResult;
 		PreparedStatement pst;
 		try {
@@ -78,11 +81,12 @@ public abstract class PostgreStatusDao<T extends Status> extends
 				updateResult = pst.executeUpdate();
 				pst.close();
 			}
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 	}
 	
-	public boolean isExistsStatus(Connection conn, String status) {
+	public boolean isExistsStatus(Connection conn, String status) throws DaoException {
 		boolean isExists = false;
 		try {	
 			PreparedStatement pst = conn.prepareStatement(String.format(GET_BY_STATUS, getTableName(), getColumnName()));
@@ -93,13 +97,14 @@ public abstract class PostgreStatusDao<T extends Status> extends
 				rs.close();
 				pst.close();
 			}
-		} catch (SQLException ignore) {
+		} catch (SQLException e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 
 		return isExists;
 	}
 
-	public Status getByStatus(Connection conn, String status) {
+	public Status getByStatus(Connection conn, String status) throws DaoException {
 		Status entity = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(GET_BY_STATUS, getTableName(), getColumnName()));
@@ -111,6 +116,7 @@ public abstract class PostgreStatusDao<T extends Status> extends
 			rs.close();
 			pst.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return entity;
 	}

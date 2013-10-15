@@ -5,14 +5,28 @@
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
 	<filter>
-		<filter-name>LocalFilter</filter-name>
-		<display-name>LocalFilter</display-name>
+		<filter-name>UserFilter</filter-name>
+		<display-name>UserFilter</display-name>
 		<description></description>
-		<filter-class>com.epam.edu.rentcar.filter.LocalFilter</filter-class>
+		<filter-class>com.epam.edu.rentcar.filter.UserFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>OrderFilter</filter-name>
+		<display-name>OrderFilter</display-name>
+		<description></description>
+		<filter-class>com.epam.edu.rentcar.filter.OrderFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>LocalFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/orders.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/commitorder.controller</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>OrderFilter</filter-name>
+		<url-pattern>/commitorder.controller</url-pattern>
 	</filter-mapping>
 	<servlet>
 		<servlet-name>ControllerServlet</servlet-name>

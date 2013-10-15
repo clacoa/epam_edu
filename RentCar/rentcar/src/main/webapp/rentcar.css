@@ -39,7 +39,7 @@
 }
 
 .button {
-	height: 20px;
+	height:20px;
 	background: #F7F7F7;
 	padding: 5px;
 	border: solid 2px #444444;
@@ -67,10 +67,25 @@
 .content {
 	overflow-y: scroll;
 	height: 500px;
+	width: 100%;
 }
 
 .language {
 	background: #E3E3E3;
 	float: right;
 	text-align: center;
+}
+.ordering {
+	width: 100%;
+	height: 100%;
+	background: #E3E3E3;
+	padding: 5px;
+	border: solid 1px #444444;
+	float: inherit;
+	text-align: center;
+}
+#form {
+  margin:0 25% 0 25%;
+  width:50%;
+  text-align: center;
 }

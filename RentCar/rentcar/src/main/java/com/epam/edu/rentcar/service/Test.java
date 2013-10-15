@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.epam.edu.rentcar.dao.impl.UserDao;
+import com.epam.edu.rentcar.dao.UserDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreCarStatusDao;
 import com.epam.edu.rentcar.dao.impl.postgre.PostgreOrderDao;

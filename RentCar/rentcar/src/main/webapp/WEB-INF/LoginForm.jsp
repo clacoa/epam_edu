@@ -25,7 +25,7 @@
 				<tr
 					style="color:#ff0000; visibility:<%=request.getAttribute("msg") != null ? "visible"
 					: "hidden"%>">
-					<td colspan=2>
+					<td colspan=4>
 						<%
 							out.print(request.getAttribute("msg"));
 						%>

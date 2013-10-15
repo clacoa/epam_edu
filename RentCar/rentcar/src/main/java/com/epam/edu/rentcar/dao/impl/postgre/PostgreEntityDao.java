@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.edu.rentcar.dao.GenericRentCarDao;
 import com.epam.edu.rentcar.entity.AbstractEntity;
+import com.epam.edu.rentcar.exception.DaoException;
 
 public abstract class PostgreEntityDao<T extends AbstractEntity> implements
 		GenericRentCarDao<T> {
@@ -23,7 +24,11 @@ public abstract class PostgreEntityDao<T extends AbstractEntity> implements
 	public final static String GET_DISTINCT = "select distinct %s from %s";
 	public final static String GET_DISTINCT_WHERE = "select distinct %s from %s where %s like ?";
 
-	public boolean isExists(Connection conn, Long id) {
+	public boolean isExists(Connection conn, Long id) throws DaoException {
+		if (id==null)
+		{
+			return false;
+		}
 		boolean isExists = false;
 		try {	
 			PreparedStatement pst = conn.prepareStatement(String.format(GET_BY_ID, getTableName()));
@@ -34,13 +39,14 @@ public abstract class PostgreEntityDao<T extends AbstractEntity> implements
 				rs.close();
 				pst.close();
 			}
-		} catch (SQLException ignore) {
+		} catch (SQLException e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 
 		return isExists;
 	}
 
-	public void delete(Connection conn, Long id) {
+	public void delete(Connection conn, Long id) throws DaoException {
 		int executeResult;
 		PreparedStatement pst;
 		try {
@@ -51,11 +57,12 @@ public abstract class PostgreEntityDao<T extends AbstractEntity> implements
 				pst.close();
 			}
 
-		} catch (Exception ingore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());			
 		}
 	}
 
-	public void saveOrUpdateAll(Connection conn, Collection<T> entities) {
+	public void saveOrUpdateAll(Connection conn, Collection<T> entities) throws DaoException {
 		for (T entity : entities) {
 			saveOrUpdate(conn, entity);
 		}

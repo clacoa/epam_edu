@@ -9,9 +9,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.epam.edu.rentcar.dao.impl.CarDao;
+import com.epam.edu.rentcar.dao.CarDao;
 import com.epam.edu.rentcar.entity.Car;
 import com.epam.edu.rentcar.entity.Status;
+import com.epam.edu.rentcar.exception.DaoException;
 
 public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> {
 
@@ -35,7 +36,7 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 		return TABLE_NAME;
 	}
 
-	public Car get(Connection conn, Long id) {
+	public Car get(Connection conn, Long id) throws DaoException {
 		Car car = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -52,12 +53,13 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return car;
 	}
 
-	public List<Car> getAll(Connection conn) {
+	public List<Car> getAll(Connection conn) throws DaoException {
 		List<Car> carList = null;
 		Car car = null;
 		try {
@@ -77,11 +79,12 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 			rs.close();
 			pst.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return carList;
 	}
 
-	public void saveOrUpdate(Connection conn, Car entity) {
+	public void saveOrUpdate(Connection conn, Car entity) throws DaoException {
 		int updateResult;
 		PreparedStatement pst;
 		try {
@@ -105,12 +108,13 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 				updateResult = pst.executeUpdate();
 				pst.close();
 			}
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 
 	}
 
-	public List<Car> findByNamedQuery(Connection conn, String queryName) {
+	public List<Car> findByNamedQuery(Connection conn, String queryName) throws DaoException {
 		List<Car> carList = null;
 		Car car = null;
 		try {
@@ -128,13 +132,13 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 			}
 			rs.close();
 			st.close();
-		} catch (Exception ignore) {
-
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return carList;
 	}
 
-	public List<String> getDistinct(Connection conn, String getColName) {
+	public List<String> getDistinct(Connection conn, String getColName) throws DaoException {
 		List<String> catalog = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -146,13 +150,13 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
-
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return catalog;
 	}
 
-	public List<String> getDistinct(Connection conn, String getColName, String addColName, String splitter) {
+	public List<String> getDistinct(Connection conn, String getColName, String addColName, String splitter) throws DaoException {
 		List<String> catalog = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -164,8 +168,8 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
-
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(),e.getCause());
 		}
 		return catalog;
 	}

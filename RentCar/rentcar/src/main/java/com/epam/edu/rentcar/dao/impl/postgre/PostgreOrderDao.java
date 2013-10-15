@@ -10,20 +10,23 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.epam.edu.rentcar.dao.impl.OrderDao;
+import com.epam.edu.rentcar.dao.OrderDao;
 import com.epam.edu.rentcar.entity.Car;
 import com.epam.edu.rentcar.entity.Order;
 import com.epam.edu.rentcar.entity.Status;
 import com.epam.edu.rentcar.entity.User;
+import com.epam.edu.rentcar.exception.DaoException;
 
 public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 		OrderDao<Order> {
 
 	private static Logger LOG = Logger.getLogger(PostgreOrderDao.class);
-	
+
 	public final static String UPDATE = "Update orders Set userid=?, carid=?, datefrom=?, dateto=?, ordercost=?, statusid=? where id=?";
 	public final static String INSERT = "Insert into orders (userid, carid, datefrom, dateto, ordercost, statusid) values (?,?,?,?,?,?)";
 	public final static String GET_CURRENT_FOR_CAR = "Select * from orders where carid=? and (statusid=1 or statusid=2)";
+	public final static String GET_CURRENT_FOR_USER = "Select * from orders where userid=? and (statusid!=4) order by datefrom desc";
+	public final static String GET_CURRENT = "Select * from orders where statusid!=4 order by datefrom desc";
 
 	public final static String TABLE_NAME = "orders";
 	public final static String ID = "id";
@@ -47,7 +50,7 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 		return TABLE_NAME;
 	}
 
-	public Order get(Connection conn, Long id) {
+	public Order get(Connection conn, Long id) throws DaoException {
 		Order order = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(String.format(
@@ -67,12 +70,13 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
 		}
 		return order;
 	}
 
-	public List<Order> getAll(Connection conn) {
+	public List<Order> getAll(Connection conn) throws DaoException {
 		List<Order> orderList = null;
 		Order order = null;
 		try {
@@ -95,11 +99,12 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 			rs.close();
 			pst.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
 		}
 		return orderList;
 	}
 
-	public void saveOrUpdate(Connection conn, Order entity) {
+	public void saveOrUpdate(Connection conn, Order entity) throws DaoException {
 		int updateResult;
 		PreparedStatement pst;
 		try {
@@ -128,12 +133,13 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 				pst.close();
 			}
 			pst.close();
-		} catch (Exception ignore) {
-			System.out.println(ignore);
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
 		}
 	}
 
-	public List<Order> findByNamedQuery(Connection conn, String queryName) {
+	public List<Order> findByNamedQuery(Connection conn, String queryName)
+			throws DaoException {
 		List<Order> orderList = null;
 		Order order = null;
 		try {
@@ -155,12 +161,13 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 			rs.close();
 			st.close();
 		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
 		}
 		return orderList;
 	}
-	
-	public Order getCurrentOrder(Connection conn, Car car){
-		Order order=null;
+
+	public Order getCurrentOrder(Connection conn, Car car) throws DaoException {
+		Order order = null;
 		try {
 			PreparedStatement pst = conn.prepareStatement(GET_CURRENT_FOR_CAR);
 			pst.setLong(1, car.getId());
@@ -177,9 +184,65 @@ public class PostgreOrderDao extends PostgreEntityDao<Order> implements
 			}
 			rs.close();
 			pst.close();
-		} catch (Exception ignore) {
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
 		}
-		return order;		
+		return order;
+	}
+
+	public List<Order> getCurrentOrders(Connection conn, User user)
+			throws DaoException {
+
+		List<Order> orderList = null;
+		Order order = null;
+		try {
+			PreparedStatement pst = conn.prepareStatement(GET_CURRENT_FOR_USER);
+			pst.setLong(1, user.getId());
+			ResultSet rs = pst.executeQuery();
+			orderList = new ArrayList<Order>();
+			while (rs.next()) {
+				Status orderStatus = pOrderStatusDao.get(conn,
+						Long.valueOf(rs.getString(STATUS_ID)));
+				Car car = pCarDao.get(conn, Long.valueOf(rs.getString(CAR_ID)));
+				order = new Order(Long.valueOf(rs.getString(ID)), user, car,
+						format.parse(rs.getString(DATE_FROM)), format.parse(rs
+								.getString(DATE_TO)), Double.valueOf(rs
+								.getString(ORDER_COST)), orderStatus);
+				orderList.add(order);
+			}
+			rs.close();
+			pst.close();
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
+		}
+		return orderList;
+	}
+	public List<Order> getCurrentOrders(Connection conn)
+			throws DaoException {
+
+		List<Order> orderList = null;
+		Order order = null;
+		try {
+			PreparedStatement pst = conn.prepareStatement(GET_CURRENT);
+			ResultSet rs = pst.executeQuery();
+			orderList = new ArrayList<Order>();
+			while (rs.next()) {
+				Status orderStatus = pOrderStatusDao.get(conn,
+						Long.valueOf(rs.getString(STATUS_ID)));
+				Car car = pCarDao.get(conn, Long.valueOf(rs.getString(CAR_ID)));
+				User user = pUserDao.get(conn,Long.valueOf(rs.getString(USER_ID)));
+				order = new Order(Long.valueOf(rs.getString(ID)), user, car,
+						format.parse(rs.getString(DATE_FROM)), format.parse(rs
+								.getString(DATE_TO)), Double.valueOf(rs
+								.getString(ORDER_COST)), orderStatus);
+				orderList.add(order);
+			}
+			rs.close();
+			pst.close();
+		} catch (Exception e) {
+			throw new DaoException(this.getTableName(), e.getCause());
+		}
+		return orderList;
 	}
 
 }

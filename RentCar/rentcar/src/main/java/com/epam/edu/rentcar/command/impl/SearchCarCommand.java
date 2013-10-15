@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.omg.CORBA.Request;
 
 import com.epam.edu.rentcar.command.Command;
@@ -12,7 +13,9 @@ import com.epam.edu.rentcar.service.tagservice.CarsTagService;
 import com.epam.edu.rentcar.tags.CarsTable;
 
 public class SearchCarCommand implements Command {
-
+	
+	private static Logger LOG = Logger.getLogger(SearchCarCommand.class);
+	
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
 

@@ -14,40 +14,38 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import org.apache.log4j.Logger;
 
 import com.epam.edu.rentcar.db.ConnectionPool;
+import com.epam.edu.rentcar.entity.Order;
+import com.epam.edu.rentcar.entity.User;
 import com.epam.edu.rentcar.model.CarData;
-import com.epam.edu.rentcar.model.CarFilter;
-import com.epam.edu.rentcar.model.PrintElement;
 import com.epam.edu.rentcar.service.tagservice.CarsTagService;
-import com.epam.edu.rentcar.util.CommonBundle;
+import com.epam.edu.rentcar.service.tagservice.CurrentOrdersTagService;
 
-public class CarsTable extends SimpleTagSupport {
-	
+
+public class CurrentOrdersTable extends SimpleTagSupport {
+
 	private static Logger LOG = Logger.getLogger(CarsTable.class);
 
-	private CarFilter filter;
-	private String id;
+	private User user;
 
-	public void setFilter(CarFilter filter) {
-		this.filter = filter;
+	public User getUser() {
+		return user;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUser(User user) {
+		this.user = user;
 	}
-
+	
 	public void doTag() throws JspException, IOException {
 		JspWriter out = getJspContext().getOut();
-		Object language = getJspContext().getAttribute("language",
-				PageContext.SESSION_SCOPE);
-		Locale locale = language != null ? new Locale(language.toString())
-				: new Locale("ru");
-		CarsTagService cts = new CarsTagService();
+		Object language = getJspContext().getAttribute("language", PageContext.SESSION_SCOPE);
+		Locale locale = language != null ? new Locale(language.toString()): new Locale("ru");
+		CurrentOrdersTagService tagService = new CurrentOrdersTagService();
 		TagPrinter printer = new TagPrinter();
 		Connection conn = null;
 		try {
 			conn = ConnectionPool.getInstance().getConnection();
-			List<CarData> carDataList = cts.createCarsTableData(conn,filter, locale);
-			printer.printCarTable(out, carDataList);
+			List<Order> orderDataList = tagService.createOrdersTableData(conn, user, locale);
+			printer.printOrderTable(out, orderDataList);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		} finally {
@@ -58,5 +56,4 @@ public class CarsTable extends SimpleTagSupport {
 				}
 		}
 	}
-
 }
