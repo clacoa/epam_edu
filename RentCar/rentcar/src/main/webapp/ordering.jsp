@@ -47,6 +47,7 @@
 	});
 	function setDateInerval() {
 		var mindate = $("#datepickerfrom").datepicker("getDate");
+		mindate.setDate(mindate.getDate() + 1);
 		$("#datepickerto").datepicker("option", "minDate", mindate);
 		var maxdate = new Date();
 		maxdate.setDate(mindate.getDate() + 30);

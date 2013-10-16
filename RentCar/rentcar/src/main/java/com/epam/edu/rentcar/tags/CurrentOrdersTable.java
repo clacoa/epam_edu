@@ -45,7 +45,7 @@ public class CurrentOrdersTable extends SimpleTagSupport {
 		try {
 			conn = ConnectionPool.getInstance().getConnection();
 			List<Order> orderDataList = tagService.createOrdersTableData(conn, user, locale);
-			printer.printOrderTable(out, orderDataList);
+			printer.printOrderTable(out, orderDataList, user, locale);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		} finally {
