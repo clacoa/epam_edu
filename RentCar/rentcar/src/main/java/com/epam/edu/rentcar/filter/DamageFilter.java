@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.edu.rentcar.model.OrderData;
 
 /**
- * Servlet Filter implementation class OrderFilter
+ * Servlet Filter implementation class DamageFilter
  */
-public class OrderFilter implements Filter {
+public class DamageFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public OrderFilter() {
+    public DamageFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -38,11 +38,9 @@ public class OrderFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = ((HttpServletResponse) response);
-		OrderData orderData = (OrderData) req.getSession().getAttribute("orderData");
-		if (orderData == null)  {
-			res.sendRedirect("./ordering.jsp");
-		} else if (!orderData.isFilled()){
-			res.sendRedirect("./ordering.jsp");
+		Long orderId = (Long)req.getSession().getAttribute("orderId");
+		if (orderId == null)  {
+			res.sendRedirect("./adminorders.jsp");
 		}
 		else{
 			chain.doFilter(request, res);

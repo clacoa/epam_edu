@@ -1,19 +1,11 @@
 package com.epam.edu.rentcar.command.impl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
 import com.epam.edu.rentcar.command.Command;
-import com.epam.edu.rentcar.dao.impl.postgre.PostgreCarDao;
-import com.epam.edu.rentcar.db.ConnectionPool;
-import com.epam.edu.rentcar.entity.Car;
-import com.epam.edu.rentcar.model.CarData;
-import com.epam.edu.rentcar.model.OrderData;
 
 public class DamageOrderCommand implements Command {
 	

@@ -31,6 +31,7 @@ public class PostgreCarDao extends PostgreEntityDao<Car> implements CarDao<Car> 
 
 	private PostgreCarStatusDao pCarStatusDao = new PostgreCarStatusDao();
 	
+
 	@Override
 	public String getTableName() {
 		return TABLE_NAME;

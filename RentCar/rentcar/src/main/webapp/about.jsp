@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="com.epam.edu.rentcar.entity.User" contentType="text/html;charset=utf-8"%>
@@ -24,16 +23,16 @@
 		<jsp:include page="/WEB-INF/header.jsp" />
 		<div class="content" style="display: table;">
 			<div style="display:<%=ruVisibility%>">
-				<h1 align="center">Здесь отображается справочная информация</h1>
-				<p>Список услуг</p>
-				<p>Условия предоставления услуг</p>
-				<p>Акции и бонусы</p>
+				<h1 align="center">Здесь отображается информация об услугодателе</h1>
+				<p>Адрес</p>
+				<p>История</p>
+				<p>Схема проезда</p>
 			</div>
 			<div style="display:<%=enVisibility%>">
-				<h1 align="center">Reference information displayed here</h1>
-				<p>List of services</p>
-				<p>Service conditions</p>
-				<p>Actions and bonuses</p>
+				<h1 align="center">Service provider information displayed here</h1>
+				<p>Address</p>
+				<p>History</p>
+				<p>Location map</p>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/footer.jsp" />

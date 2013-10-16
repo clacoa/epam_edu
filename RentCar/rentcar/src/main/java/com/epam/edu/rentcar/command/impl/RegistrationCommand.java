@@ -20,7 +20,7 @@ public class RegistrationCommand implements Command {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-		String redirect = "/index.jsp";
+		String redirect = "/registration.jsp";
 		String msg = null;
 		String email = request.getParameter("email");
 		String nickName = request.getParameter("nickName");
@@ -39,23 +39,18 @@ public class RegistrationCommand implements Command {
 					passwordRepeat, firstName, lastName, passport);
 			switch (result) {
 			case 0:
-				msg = CommonBundle.getProperty("msg.password",	locale);
-				redirect = "/registration.jsp";
+				msg = CommonBundle.getProperty("registration.msg.password",	locale);
 				break;
 			case 1:
-				msg = CommonBundle.getProperty("msg.email",	locale);
-				redirect = "/registration.jsp";
+				msg = CommonBundle.getProperty("registration.msg.email",	locale);
 				break;
 			case 2:
-				msg = CommonBundle.getProperty("msg.passport",	locale);
-				redirect = "/registration.jsp";
+				msg = CommonBundle.getProperty("registration.msg.passport",	locale);
 				break;
 			case 3:
 				request.getSession().setAttribute("user", LoginChecker.checkUser(conn,email));
-				Object prevUrl = request.getSession().getAttribute("prevUrl");
-				if (prevUrl != null) {
-					redirect = prevUrl.toString();
-				}
+				LOG.info(LoginChecker.checkUser(conn,email)+" registred");
+				redirect ="/index.jsp";
 				break;
 			}
 

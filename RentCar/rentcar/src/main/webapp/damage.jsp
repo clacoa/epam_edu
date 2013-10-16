@@ -1,9 +1,7 @@
 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="com.epam.edu.rentcar.util.CommonBundle"%>
-<%@page import="com.epam.edu.rentcar.service.Test"
-	contentType="text/html;charset=utf-8"%>
+<%@page import="com.epam.edu.rentcar.util.CommonBundle" contentType="text/html;charset=utf-8"%>
 <%@page import="com.epam.edu.rentcar.entity.Car"%>
 <%@page import="com.epam.edu.rentcar.model.CarData"%>
 <%@page import="com.epam.edu.rentcar.model.OrderData"%>
@@ -14,9 +12,7 @@
 <%
 	request.getSession().setAttribute("prevUrl",
 			request.getServletPath().toString());
-	String locale = request.getSession().getAttribute("language") != null ? request
-			.getSession().getAttribute("language").toString()
-			: "ru";
+	String locale = request.getSession().getAttribute("language") != null ? request.getSession().getAttribute("language").toString(): "ru";
 %>
 <html>
 <fmt:setLocale value="${language}" />
@@ -42,7 +38,7 @@
 		}
 	}
 	function isNumber(inputvalue) {
-		if (!isNaN(parseFloat(inputvalue)))
+		if (!isNaN(parseFloat(inputvalue))){
 		  return true;
 		} else {
 			alert('<%=CommonBundle.getProperty("notnumeric", new Locale(locale))%>');
@@ -66,7 +62,7 @@
 									</td>
 									<td>
 										<div class='button'
-											onclick="DamageForm.submit()">
+											onclick="checkAndPost()">
 											<img src='./Images/check.png' height='100%' align="left">
 												&nbsp 
 											<fmt:message key="confirm" />

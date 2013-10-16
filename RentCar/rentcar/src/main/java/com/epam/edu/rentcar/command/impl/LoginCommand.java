@@ -33,6 +33,7 @@ public class LoginCommand implements Command {
 				if (LoginChecker.checkLogin(conn,email, password)) {
 					request.getSession().setAttribute("user",
 							LoginChecker.checkUser(conn,email));
+					LOG.info(LoginChecker.checkUser(conn,email)+" logged in");
 				} else {
 					String msg = CommonBundle.getProperty("errormsg",	locale);
 					request.setAttribute("msg", msg);

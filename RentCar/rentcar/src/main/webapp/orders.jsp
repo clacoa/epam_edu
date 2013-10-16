@@ -69,7 +69,14 @@
 			<fieldset>
 				<div style="display:<%=prepareVisibility%>">
 					<form name="OrderCommitForm" method="post" action="commitorder.controller">
-						<table>
+						<table align="center" cellpadding="10px">
+							<tr style="text-align: center;">
+								<td><fmt:message key="orders.car.model" /></td>
+								<td><fmt:message key="orders.car.datefrom" /></td>
+								<td><fmt:message key="orders.car.dateto" /></td>
+								<td><fmt:message key="orders.order.cost" /></td>
+								<td></td>
+							</tr>
 							<tr>
 								<td><%=car%></td>
 								<td><%=dateFrom%></td>

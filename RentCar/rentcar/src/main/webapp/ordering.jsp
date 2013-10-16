@@ -1,9 +1,7 @@
 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="com.epam.edu.rentcar.util.CommonBundle"%>
-<%@page import="com.epam.edu.rentcar.service.Test"
-	contentType="text/html;charset=utf-8"%>
+<%@page import="com.epam.edu.rentcar.util.CommonBundle" contentType="text/html;charset=utf-8"%>
 <%@page import="com.epam.edu.rentcar.entity.Car"%>
 <%@page import="com.epam.edu.rentcar.model.CarData"%>
 <%@page import="com.epam.edu.rentcar.model.OrderData"%>

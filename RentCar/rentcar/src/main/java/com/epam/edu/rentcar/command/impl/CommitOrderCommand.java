@@ -53,6 +53,7 @@ public class CommitOrderCommand implements Command {
 				carDao.saveOrUpdate(conn, car);
 				orderDao.saveOrUpdate(conn, order);
 				conn.commit();	
+				LOG.info(user+" commited order "+order);
 				request.getSession().setAttribute("orderData", null);
 			} catch (Exception e) {
 				LOG.error(e.getMessage(), e);

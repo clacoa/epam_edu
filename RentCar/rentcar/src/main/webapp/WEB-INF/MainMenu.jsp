@@ -13,7 +13,6 @@
 	boolean userVis = user != null ? user.getRole().getId() != 2L : false;
 	String adminVisibility= adminVis ? "block" : "none";
 	String userVisibility= userVis ? "block" : "none";
-	
 %>
 
 <fmt:setLocale value="${language}" />
@@ -21,12 +20,12 @@
 	<table class="menu" height="100%" width="100%" align="left"
 		cellpadding="5px">
 		<tr>
-			<td><fmt:message key="info"/></td>
+			<td><a href="index.jsp"><fmt:message key="info"/></a></td>
 			<td><a href="cars.jsp"><fmt:message key="auto" /></a></td>
 			<td><a href="ordering.jsp"><fmt:message key="reserv"/></a></td>
 			<td style="display:<%=userVisibility%>"><a href="orders.jsp"><fmt:message key="orders"/></a></td>
 			<td style="display:<%=adminVisibility%>"><a href="orders.jsp"><fmt:message key="adminorders"/></a></td>
-			<td><fmt:message key="about"/></td>
+			<td><a href="about.jsp"><fmt:message key="about"/></a></td>
 		</tr>
 	</table>
 </fmt:bundle>

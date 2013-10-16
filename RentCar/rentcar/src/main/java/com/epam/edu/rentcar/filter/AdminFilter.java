@@ -11,25 +11,25 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.edu.rentcar.model.OrderData;
+import com.epam.edu.rentcar.entity.User;
 
 /**
- * Servlet Filter implementation class OrderFilter
+ * Servlet Filter implementation class AdminFilter
  */
-public class OrderFilter implements Filter {
+public class AdminFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public OrderFilter() {
-        // TODO Auto-generated constructor stub
+    public AdminFilter() {
+    
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
+	
 	}
 
 	/**
@@ -38,14 +38,15 @@ public class OrderFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = ((HttpServletResponse) response);
-		OrderData orderData = (OrderData) req.getSession().getAttribute("orderData");
-		if (orderData == null)  {
-			res.sendRedirect("./ordering.jsp");
-		} else if (!orderData.isFilled()){
-			res.sendRedirect("./ordering.jsp");
-		}
-		else{
-			chain.doFilter(request, res);
+		User user = (User) req.getSession().getAttribute("user");
+		if (user == null) {
+			res.sendRedirect("./index.jsp");
+		} else {
+			if (user.getRole().getId() != 2) {
+				res.sendRedirect("./index.jsp");
+			} else {
+				chain.doFilter(request, res);
+			}
 		}
 	}
 
@@ -53,7 +54,7 @@ public class OrderFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+	
 	}
 
 }

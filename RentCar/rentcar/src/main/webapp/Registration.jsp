@@ -33,7 +33,7 @@
 		if (pattern.test(RegistrationForm.email.value)) {
 			return true;
 		} else {
-			alert('<%=CommonBundle.getProperty("enteremail", new Locale(locale))%>');
+			alert('<%=CommonBundle.getProperty("registration.enteremail", new Locale(locale))%>');
 			return false;
 		}
 	}
@@ -47,7 +47,7 @@
 	}
 	function chekPassword() {
 		if (RegistrationForm.password.value != RegistrationForm.passwordRepeat.value) {
-			alert('<%=CommonBundle.getProperty("passwordsfail", new Locale(locale))%>');
+			alert('<%=CommonBundle.getProperty("registration.passwordsfail", new Locale(locale))%>');
 			return false;
 		} else {
 			return true;
@@ -69,7 +69,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/header.jsp" />
-	<div class="registration">
+	<div class=".ordering">
 		<center>
 			<fieldset>
 				<form name="RegistrationForm" action="registration.controller"
@@ -124,7 +124,7 @@
 					</table>
 				</form>
 				<div class="button" onclick="checkAndPost()">
-					<img src="./Images/plus.png" height="100%" align="left" /> <fmt:message key="register" />
+					<img src="./Images/plus.png" height="100%" align="left" />&nbsp<fmt:message key="register" />
 				</div>
 			</fieldset>
 		</center>

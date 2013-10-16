@@ -80,107 +80,117 @@ public class TagPrinter {
 	public void printOrderTable(JspWriter out, List<Order> orders, User user,
 			Locale locale) throws IOException {
 		if (orders != null) {
-			out.println("<table style='width:100%'>");
-			out.println("<tr style='text-align: center;'>");
-			out.println("<td>");
-			out.println("</td>");
-
-			if (user.getRole().getId() == 2L) {
+			if (!orders.isEmpty()) {
+				out.println("<table style='width:100%'; text-align: center;>");
+				out.println("<tr>");
 				out.println("<td>");
-				out.println(CommonBundle.getProperty("orders.user.firstname",locale));
-				out.println("</td>");
-				out.println("<td>");
-				out.println(CommonBundle.getProperty("orders.user.lastname",locale));
-				out.println("</td>");
-				out.println("<td>");
-				out.println(CommonBundle.getProperty("orders.user.passport",locale));
-			}
-
-			out.println("<td>");
-			out.println(CommonBundle.getProperty("orders.car.model",locale));
-			out.println("</td>");
-
-			out.println("<td>");
-			out.println(CommonBundle.getProperty("orders.car.cost",locale));
-			out.println("</td>");
-
-			out.println("<td>");
-			out.println(CommonBundle.getProperty("orders.car.datefrom",locale));
-			out.println("</td>");
-
-			out.println("<td>");
-			out.println(CommonBundle.getProperty("orders.car.dateto",locale));
-			out.println("</td>");
-
-			out.println("<td>");
-			out.println(CommonBundle.getProperty("orders.order.cost",locale));
-			out.println("</td>");
-
-			out.println("<td>");
-			out.println(CommonBundle.getProperty("orders.order.addcost",locale));
-			out.println("</td>");
-
-			if (user.getRole().getId() == 2L) {
-				out.println("<td>");
-				out.println("</td>");
-			}
-			out.println("</tr>");
-			
-			int i = 0;
-			for (Order order : orders) {
-
-				i++;
-				out.println((i % 2) == 0 ? "<tr class='row2'>" : "<tr>");
-				out.println("<td>");
-				out.println(i);
 				out.println("</td>");
 
 				if (user.getRole().getId() == 2L) {
 					out.println("<td>");
-					out.println(order.getUser().getFirstName());
+					out.println(CommonBundle.getProperty(
+							"orders.user.firstname", locale));
 					out.println("</td>");
 					out.println("<td>");
-					out.println(order.getUser().getLastName());
+					out.println(CommonBundle.getProperty(
+							"orders.user.lastname", locale));
 					out.println("</td>");
 					out.println("<td>");
-					out.println(order.getUser().getPassport());
+					out.println(CommonBundle.getProperty(
+							"orders.user.passport", locale));
 				}
 
 				out.println("<td>");
-				out.println(order.getCar().getCarInfo());
+				out.println(CommonBundle
+						.getProperty("orders.car.model", locale));
 				out.println("</td>");
 
 				out.println("<td>");
-				out.println(order.getCar().getCost().toString());
+				out.println(CommonBundle.getProperty("orders.car.cost", locale));
 				out.println("</td>");
 
 				out.println("<td>");
-				out.println(format.format(order.getDateFrom()));
+				out.println(CommonBundle.getProperty("orders.car.datefrom",
+						locale));
 				out.println("</td>");
 
 				out.println("<td>");
-				out.println(format.format(order.getDateTo()));
+				out.println(CommonBundle.getProperty("orders.car.dateto",
+						locale));
 				out.println("</td>");
 
 				out.println("<td>");
-				out.println(order.getOrderCost().toString());
+				out.println(CommonBundle.getProperty("orders.order.cost",
+						locale));
 				out.println("</td>");
 
 				out.println("<td>");
-				if (order.getAddCost() != null) {
-					out.println(order.getAddCost().toString());
-				}
+				out.println(CommonBundle.getProperty("orders.order.addcost",
+						locale));
 				out.println("</td>");
 
 				if (user.getRole().getId() == 2L) {
 					out.println("<td>");
-					out.println(adminControls(order, locale));
 					out.println("</td>");
 				}
 				out.println("</tr>");
-			}
-			out.println("</table>");
 
+				int i = 0;
+				for (Order order : orders) {
+
+					i++;
+					out.println((i % 2) == 0 ? "<tr class='row2'>" : "<tr>");
+					out.println("<td>");
+					out.println(i);
+					out.println("</td>");
+
+					if (user.getRole().getId() == 2L) {
+						out.println("<td>");
+						out.println(order.getUser().getFirstName());
+						out.println("</td>");
+						out.println("<td>");
+						out.println(order.getUser().getLastName());
+						out.println("</td>");
+						out.println("<td>");
+						out.println(order.getUser().getPassport());
+					}
+
+					out.println("<td>");
+					out.println(order.getCar().getCarInfo());
+					out.println("</td>");
+
+					out.println("<td>");
+					out.println(order.getCar().getCost().toString());
+					out.println("</td>");
+
+					out.println("<td>");
+					out.println(format.format(order.getDateFrom()));
+					out.println("</td>");
+
+					out.println("<td>");
+					out.println(format.format(order.getDateTo()));
+					out.println("</td>");
+
+					out.println("<td>");
+					out.println(order.getOrderCost().toString());
+					out.println("</td>");
+
+					out.println("<td>");
+					if (order.getAddCost() != null) {
+						out.println(order.getAddCost().toString());
+					}
+					out.println("</td>");
+
+					if (user.getRole().getId() == 2L) {
+						out.println("<td>");
+						out.println(adminControls(order, locale));
+						out.println("</td>");
+					}
+					out.println("</tr>");
+				}
+				out.println("</table>");
+
+			}
 		}
 	}
 
