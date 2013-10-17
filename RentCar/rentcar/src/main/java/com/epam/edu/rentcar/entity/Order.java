@@ -99,4 +99,67 @@ public class Order extends AbstractEntity {
 		this.user = user;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((addCost == null) ? 0 : addCost.hashCode());
+		result = prime * result + ((car == null) ? 0 : car.hashCode());
+		result = prime * result
+				+ ((dateFrom == null) ? 0 : dateFrom.hashCode());
+		result = prime * result + ((dateTo == null) ? 0 : dateTo.hashCode());
+		result = prime * result
+				+ ((orderCost == null) ? 0 : orderCost.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (addCost == null) {
+			if (other.addCost != null)
+				return false;
+		} else if (!addCost.equals(other.addCost))
+			return false;
+		if (car == null) {
+			if (other.car != null)
+				return false;
+		} else if (!car.equals(other.car))
+			return false;
+		if (dateFrom == null) {
+			if (other.dateFrom != null)
+				return false;
+		} else if (!dateFrom.equals(other.dateFrom))
+			return false;
+		if (dateTo == null) {
+			if (other.dateTo != null)
+				return false;
+		} else if (!dateTo.equals(other.dateTo))
+			return false;
+		if (orderCost == null) {
+			if (other.orderCost != null)
+				return false;
+		} else if (!orderCost.equals(other.orderCost))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
 }

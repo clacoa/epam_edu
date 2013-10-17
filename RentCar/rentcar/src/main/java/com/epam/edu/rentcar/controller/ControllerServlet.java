@@ -28,9 +28,7 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-//		request.getRequestDispatcher(
-//				request.getAttribute("sendRedirect").toString()).forward(
-//				request, response);
+		
 	}
 
 	/**
@@ -40,14 +38,6 @@ public class ControllerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-//		request.setCharacterEncoding("UTF-8");
-//		String command = request.getParameter("command");
-//		String url=CommandFactory.getInstance().invoke(command, request, response);
-//		// response.sendRedirect(request.getAttribute("sendRedirect").toString());
-//		if (url != null){
-//		request.getRequestDispatcher(url).forward(
-//				request, response);
-//		}
 	}
 
 	protected String getActionName(HttpServletRequest request) {

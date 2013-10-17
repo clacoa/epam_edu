@@ -108,4 +108,64 @@ public class OrderData {
 				&& this.getDateTo() != null && this.getOrderCost() != null;
 
 	}
+
+	@Override
+	public String toString() {
+		return "OrderData [carData=" + carData + ", dateFrom=" + dateFrom
+				+ ", dateTo=" + dateTo + ", orderCost=" + orderCost
+				+ ", status=" + status + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((carData == null) ? 0 : carData.hashCode());
+		result = prime * result
+				+ ((dateFrom == null) ? 0 : dateFrom.hashCode());
+		result = prime * result + ((dateTo == null) ? 0 : dateTo.hashCode());
+		result = prime * result
+				+ ((orderCost == null) ? 0 : orderCost.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderData other = (OrderData) obj;
+		if (carData == null) {
+			if (other.carData != null)
+				return false;
+		} else if (!carData.equals(other.carData))
+			return false;
+		if (dateFrom == null) {
+			if (other.dateFrom != null)
+				return false;
+		} else if (!dateFrom.equals(other.dateFrom))
+			return false;
+		if (dateTo == null) {
+			if (other.dateTo != null)
+				return false;
+		} else if (!dateTo.equals(other.dateTo))
+			return false;
+		if (orderCost == null) {
+			if (other.orderCost != null)
+				return false;
+		} else if (!orderCost.equals(other.orderCost))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
+	
+	
 }

@@ -24,12 +24,7 @@ public class ConnectionPool {
 		p.setUsername(Property.getProperty("database.user"));
 		p.setPassword(Property.getProperty("database.password"));
 		p.setConnectionProperties("useUnicode=yes;characterEncoding=utf8;");
-		// p.setValidationInterval(30000);
-		// p.setTimeBetweenEvictionRunsMillis(30000);
-		// p.setMaxActive(100);
 		p.setInitialSize(10);
-		// p.setMaxWait(10000);
-		// p.setMinEvictableIdleTimeMillis(30000);
 		datasource = new DataSource();
 		datasource.setPoolProperties(p);
 	}
@@ -43,6 +38,7 @@ public class ConnectionPool {
 	}
 
 	public static ConnectionPool getInstance() {
+		
 		if (instance == null) {
 			synchronized (ConnectionPool.class) {
 				if (instance == null) {
